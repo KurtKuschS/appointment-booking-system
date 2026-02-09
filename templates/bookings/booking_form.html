@@ -3,9 +3,9 @@
 {% block title %}Nueva reserva{% endblock %}
 
 {% block content %}
-    <h2>Nueva reserva</h2>
+    <h2 class="section-title">Nueva reserva</h2>
 
-    <form method="get">
+    <form method="get" class="form-card">
         <div class="card">
             <label>Servicio</label><br />
             {{ filter_form.service }}
@@ -34,7 +34,7 @@
         <button type="submit">Ver horarios</button>
     </form>
 
-    <form method="post">
+    <form method="post" class="form-card">
         {% csrf_token %}
         {{ booking_form.non_field_errors }}
         {{ booking_form.service }}

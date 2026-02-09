@@ -3,7 +3,7 @@
 {% block title %}Contacto{% endblock %}
 
 {% block content %}
-    <h2>{{ contact.title|default:"Contacto" }}</h2>
+    <h2 class="section-title">{{ contact.title|default:"Contacto" }}</h2>
 
     {% if user.is_staff %}
         <a class="hero-cta" href="{% url 'contact_edit' %}">Editar contacto</a>
@@ -11,14 +11,10 @@
 
     <div class="contact-grid">
         <div class="card">
-            <h3>Direccion</h3>
-            <p>{{ contact.address|default:"" }}</p>
-
-            <h3>Horario</h3>
-            <p>{{ contact.schedule|default:"" }}</p>
-
-            <h3>Telefono</h3>
-            <p>{{ contact.phone|default:"" }}</p>
+            <h3>Informacion de contacto</h3>
+            <p><strong>Direccion</strong><br />{{ contact.address|default:"" }}</p>
+            <p><strong>Horario</strong><br />{{ contact.schedule|default:"" }}</p>
+            <p><strong>Telefono</strong><br />{{ contact.phone|default:"" }}</p>
 
             <div class="contact-actions">
                 {% if contact.whatsapp %}
@@ -32,10 +28,7 @@
                 {% endif %}
             </div>
 
-            <p>
-                <strong>Correo:</strong>
-                {{ contact.email|default:"" }}
-            </p>
+            <p><strong>Correo</strong><br />{{ contact.email|default:"" }}</p>
         </div>
 
         <div class="card">

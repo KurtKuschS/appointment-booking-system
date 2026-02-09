@@ -1,6 +1,8 @@
 from django import forms
 from django.utils import timezone
 
+from .models import Service
+
 
 class BulkSlotForm(forms.Form):
     WEEKDAY_CHOICES = [
@@ -61,3 +63,17 @@ class BulkSlotForm(forms.Form):
             cleaned["weekdays"] = [int(value) for value in weekdays]
 
         return cleaned
+
+
+class ServiceForm(forms.ModelForm):
+    class Meta:
+        model = Service
+        fields = ("name", "description", "duration_minutes", "price", "is_active")
+        widgets = {
+            "description": forms.Textarea(attrs={"rows": 4}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field_name in self.fields:
+            self.fields[field_name].widget.attrs.update({"class": "input"})

@@ -3,7 +3,7 @@
 {% block title %}Politicas{% endblock %}
 
 {% block content %}
-    <h2>{{ policy.title|default:"Politicas del salon" }}</h2>
+    <h2 class="section-title">{{ policy.title|default:"Politicas del salon" }}</h2>
 
     {% if user.is_staff %}
         <a class="hero-cta" href="{% url 'policy_edit' %}">Editar politicas</a>

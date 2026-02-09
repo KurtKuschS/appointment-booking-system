@@ -15,18 +15,24 @@
     </section>
 
     <section>
-        <h3>Servicios destacados</h3>
+        <h3 class="section-title">Servicios destacados</h3>
+        <p class="section-subtitle">Tecnicas suaves y resultados consistentes, pensadas para tu rutina.</p>
         {% if services %}
-            {% for service in services %}
-                <div class="card">
-                    <strong>{{ service.name }}</strong><br />
-                    {% if service.description %}
-                        <span>{{ service.description }}</span><br />
-                    {% endif %}
-                    <span>{{ service.duration_minutes }} min</span>
-                    <span class="badge">$ {{ service.price }}</span>
-                </div>
-            {% endfor %}
+            <div class="service-grid">
+                {% for service in services %}
+                    <div class="card service-card">
+                        <strong>{{ service.name }}</strong>
+                        {% if service.description %}
+                            <span>{{ service.description }}</span>
+                        {% endif %}
+                        <div class="service-meta">
+                            <span>{{ service.duration_minutes }} min</span>
+                            <span class="service-price">$ {{ service.price }}</span>
+                        </div>
+                        <a class="btn btn--ghost" href="{% url 'booking_create' %}?service={{ service.id }}">Reservar</a>
+                    </div>
+                {% endfor %}
+            </div>
         {% else %}
             <p>No hay servicios activos.</p>
         {% endif %}

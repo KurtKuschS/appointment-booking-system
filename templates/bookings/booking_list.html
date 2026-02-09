@@ -3,17 +3,20 @@
 {% block title %}Mis reservas{% endblock %}
 
 {% block content %}
-    <h2>Mis reservas</h2>
+    <h2 class="section-title">Mis reservas</h2>
 
     {% if bookings %}
         {% for booking in bookings %}
             <div class="card">
-                <strong>{{ booking.service.name }}</strong><br />
-                <span>{{ booking.slot.date }} {{ booking.slot.start_time }} - {{ booking.slot.end_time }}</span><br />
-                <span class="badge">{{ booking.get_status_display }}</span>
+                <strong>{{ booking.service.name }}</strong>
+                <div class="booking-meta">
+                    <span>{{ booking.slot.date }}</span>
+                    <span>{{ booking.slot.start_time }} - {{ booking.slot.end_time }}</span>
+                </div>
+                <span class="badge badge--{{ booking.status }}">{{ booking.get_status_display }}</span>
                 {% if booking.status != "cancelled" and booking.status != "completed" %}
                     <div>
-                        <a href="{% url 'booking_cancel' booking.id %}">Cancelar</a>
+                        <a class="btn btn--ghost" href="{% url 'booking_cancel' booking.id %}">Cancelar</a>
                     </div>
                 {% endif %}
             </div>

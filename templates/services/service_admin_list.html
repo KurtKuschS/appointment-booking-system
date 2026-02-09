@@ -1,12 +1,10 @@
 {% extends "base.html" %}
 
-{% block title %}Servicios{% endblock %}
+{% block title %}Gestionar servicios{% endblock %}
 
 {% block content %}
-    <h2 class="section-title">Servicios disponibles</h2>
-    {% if user.is_staff %}
-        <a class="btn btn--ghost" href="{% url 'service_admin_list' %}">Gestionar servicios</a>
-    {% endif %}
+    <h2 class="section-title">Gestionar servicios</h2>
+    <a class="btn" href="{% url 'service_create' %}">Crear servicio</a>
 
     {% if services %}
         <div class="service-grid">
@@ -19,12 +17,18 @@
                     <div class="service-meta">
                         <span>{{ service.duration_minutes }} min</span>
                         <span class="service-price">$ {{ service.price }}</span>
+                        {% if not service.is_active %}
+                            <span class="badge">Inactivo</span>
+                        {% endif %}
                     </div>
-                    <a class="btn btn--ghost" href="{% url 'booking_create' %}?service={{ service.id }}">Reservar</a>
+                    <div class="service-meta">
+                        <a class="btn btn--ghost" href="{% url 'service_update' service.id %}">Editar</a>
+                        <a class="btn btn--ghost" href="{% url 'service_delete' service.id %}">Eliminar</a>
+                    </div>
                 </div>
             {% endfor %}
         </div>
     {% else %}
-        <p>No hay servicios activos.</p>
+        <p>No hay servicios.</p>
     {% endif %}
 {% endblock %}

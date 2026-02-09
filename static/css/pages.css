@@ -1,0 +1,20 @@
+.section-subtitle {
+    color: var(--muted);
+    margin-bottom: 16px;
+}
+
+.form-card {
+    display: grid;
+    gap: 10px;
+}
+
+.form-row {
+    display: grid;
+    gap: 10px;
+}
+
+@media (min-width: 768px) {
+    .form-row--two {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
