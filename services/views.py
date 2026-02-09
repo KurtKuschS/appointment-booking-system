@@ -1,5 +1,6 @@
 from datetime import datetime, timedelta
 
+from django.contrib import messages
 from django.contrib.auth.decorators import user_passes_test
 from django.shortcuts import get_object_or_404, redirect, render
 
@@ -130,11 +131,22 @@ def slot_update(request, pk):
 @user_passes_test(_is_staff)
 def slot_delete(request, pk):
 	slot = get_object_or_404(AvailabilitySlot, pk=pk)
+	booking = getattr(slot, "booking", None)
+	can_delete = booking is None or booking.status == "cancelled"
+	if not can_delete:
+		messages.error(request, "No puedes eliminar un horario con reserva asociada.")
+		return redirect("slot_list")
 	if request.method == "POST":
+		if booking and booking.status == "cancelled":
+			booking.delete()
 		slot.delete()
 		return redirect("slot_list")
 
-	return render(request, "services/slot_confirm_delete.html", {"slot": slot})
+	return render(
+		request,
+		"services/slot_confirm_delete.html",
+		{"slot": slot, "can_delete": can_delete, "booking": booking},
+	)
 
 
 @user_passes_test(_is_staff)

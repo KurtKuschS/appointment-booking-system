@@ -37,8 +37,10 @@
                         {% else %}
                             <span class="badge badge--cancelled">Inactivo</span>
                         {% endif %}
-                        {% if slot.booking %}
+                        {% if slot.booking and slot.booking.status != "cancelled" %}
                             <span class="badge badge--confirmed">Reservado</span>
+                        {% elif slot.booking and slot.booking.status == "cancelled" %}
+                            <span class="badge badge--cancelled">Cancelada</span>
                         {% endif %}
                     </div>
                     <div class="service-meta">

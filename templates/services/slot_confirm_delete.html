@@ -6,10 +6,18 @@
     <h2 class="section-title">Eliminar horario</h2>
     <div class="card">
         <p>Vas a eliminar: <strong>{{ slot.date }} {{ slot.start_time }} - {{ slot.end_time }}</strong></p>
-        <form method="post">
-            {% csrf_token %}
-            <button type="submit">Confirmar</button>
-            <a class="btn btn--ghost" href="{% url 'slot_list' %}">Cancelar</a>
-        </form>
+        {% if can_delete %}
+            {% if booking and booking.status == "cancelled" %}
+                <p>Esta reserva esta cancelada. Se eliminara junto con el horario.</p>
+            {% endif %}
+            <form method="post">
+                {% csrf_token %}
+                <button type="submit">Confirmar</button>
+                <a class="btn btn--ghost" href="{% url 'slot_list' %}">Cancelar</a>
+            </form>
+        {% else %}
+            <p>No se puede eliminar porque hay una reserva asociada.</p>
+            <a class="btn btn--ghost" href="{% url 'slot_list' %}">Volver</a>
+        {% endif %}
     </div>
 {% endblock %}
