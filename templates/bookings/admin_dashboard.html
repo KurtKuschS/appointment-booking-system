@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+    <h2>Dashboard</h2>
+
+    <div class="card">
+        <strong>Ingresos del mes ({{ month_label }})</strong><br />
+        <span class="badge">$ {{ income_total }}</span>
+    </div>
+
+    <div class="card">
+        <strong>Servicios mas solicitados</strong>
+        {% if top_services %}
+            <ul>
+                {% for item in top_services %}
+                    <li>{{ item.service__name }} - {{ item.total }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No hay datos.</p>
+        {% endif %}
+    </div>
+
+    <div class="card">
+        <strong>Clientas frecuentes</strong>
+        {% if top_clients %}
+            <ul>
+                {% for item in top_clients %}
+                    <li>
+                        {{ item.client__first_name }} {{ item.client__last_name }}
+                        {% if not item.client__first_name and not item.client__last_name %}
+                            {{ item.client__username }}
+                        {% endif %}
+                        - {{ item.total }}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No hay datos.</p>
+        {% endif %}
+    </div>
+{% endblock %}

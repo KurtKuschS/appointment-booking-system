@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block title %}Horarios creados{% endblock %}
+
+{% block content %}
+    <h2>Horarios creados</h2>
+    <p>Los horarios se generaron correctamente.</p>
+    <a href="{% url 'slot_bulk_create' %}">Crear mas horarios</a>
+{% endblock %}

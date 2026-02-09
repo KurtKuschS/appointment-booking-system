@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block title %}Editar galeria{% endblock %}
+
+{% block content %}
+    <h2>Editar galeria</h2>
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        {{ formset.non_form_errors }}
+
+        <div class="card">
+            <label>Titulo</label><br />
+            {{ page_form.title }}
+            {{ page_form.title.errors }}
+        </div>
+
+        <div class="card">
+            <label>Subtitulo</label><br />
+            {{ page_form.subtitle }}
+            {{ page_form.subtitle.errors }}
+        </div>
+
+        <div class="card">
+            <h3>Fotos</h3>
+            {{ formset.management_form }}
+            {% for form in formset %}
+                <div class="card">
+                    {% for hidden in form.hidden_fields %}
+                        {{ hidden }}
+                    {% endfor %}
+                    {{ form.non_field_errors }}
+                    {% if form.instance and form.instance.before_image %}
+                        <div class="about-photo">
+                            <img src="{{ form.instance.before_image.url }}" alt="Antes" />
+                        </div>
+                    {% endif %}
+                    {% if form.instance and form.instance.after_image %}
+                        <div class="about-photo">
+                            <img src="{{ form.instance.after_image.url }}" alt="Despues" />
+                        </div>
+                    {% endif %}
+
+                    <label>Antes</label><br />
+                    {{ form.before_image }}
+                    {{ form.before_image.errors }}
+
+                    <label>Despues</label><br />
+                    {{ form.after_image }}
+                    {{ form.after_image.errors }}
+
+                    <label>Descripcion</label><br />
+                    {{ form.caption }}
+                    {{ form.caption.errors }}
+
+                    <label>Orden</label><br />
+                    {{ form.order }}
+                    {{ form.order.errors }}
+
+                    {% if form.DELETE %}
+                        <label>
+                            {{ form.DELETE }} Eliminar
+                        </label>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+
+        <button type="submit">Guardar cambios</button>
+    </form>
+{% endblock %}

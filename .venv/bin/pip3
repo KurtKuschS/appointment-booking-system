@@ -1,4 +1,4 @@
-#!/mnt/c/Users/kurtk/OneDrive/Escritorio/Empleabilidad/appointment-booking-system/.venv/bin/python3.11
+#!/home/kurtunix/projects/appointment-booking-system/.venv/bin/python3
 # -*- coding: utf-8 -*-
 import re
 import sys

@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}Usuarios{% endblock %}
+
+{% block content %}
+    <h2>Usuarios registrados</h2>
+
+    {% if users %}
+        {% for user in users %}
+            <div class="card">
+                <strong>{{ user.get_full_name|default:user.username }}</strong><br />
+                <span>{{ user.username }}</span><br />
+                {% if user.email %}
+                    <span>{{ user.email }}</span><br />
+                {% endif %}
+                {% if user.clientprofile and user.clientprofile.phone %}
+                    <span>Telefono: {{ user.clientprofile.phone }}</span>
+                {% endif %}
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>No hay usuarios registrados.</p>
+    {% endif %}
+{% endblock %}

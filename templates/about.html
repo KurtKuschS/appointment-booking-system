@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block title %}Sobre el salon{% endblock %}
+
+{% block content %}
+    <h2>{{ about.title|default:"Sobre el salon" }}</h2>
+    {% if user.is_staff %}
+        <a class="hero-cta" href="{% url 'about_edit' %}">Editar contenido</a>
+    {% endif %}
+
+    <div class="about-grid">
+        <div class="card">
+            <h3>Historia</h3>
+            <p>
+                {% if about and about.story %}
+                    {{ about.story }}
+                {% else %}
+                    Salon Lash nacio para realzar miradas con tecnicas seguras y resultados naturales.
+                    Empezo como un proyecto personal y hoy atiende a clientas que buscan un trato cercano
+                    y un acabado prolijo.
+                {% endif %}
+            </p>
+
+            <h3>Experiencia y especializaciones</h3>
+            {% if about and about.experience %}
+                <p>{{ about.experience }}</p>
+            {% else %}
+                <ul class="about-list">
+                    <li>Extensiones clasicas e hibridas</li>
+                    <li>Volumen ruso y volumen brasileno</li>
+                    <li>Lifting de pestanas y perfilado de cejas</li>
+                    <li>Retoques y retiros seguros</li>
+                </ul>
+            {% endif %}
+
+            <h3>Certificaciones</h3>
+            {% if about and about.certifications %}
+                <p>{{ about.certifications }}</p>
+            {% else %}
+                <ul class="about-list">
+                    <li>Certificacion en extensiones clasicas</li>
+                    <li>Certificacion en volumen ruso</li>
+                    <li>Higiene y bioseguridad</li>
+                </ul>
+            {% endif %}
+        </div>
+
+        <div class="card">
+            <h3>Fotos del salon</h3>
+            <div class="about-photos">
+                {% if about and about.photos.all %}
+                    {% for photo in about.photos.all %}
+                        <div class="about-photo">
+                            <img src="{{ photo.image.url }}" alt="{{ photo.caption|default:'Foto del salon' }}" />
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="about-photo" aria-label="Foto del salon"></div>
+                    <div class="about-photo" aria-label="Foto del equipo"></div>
+                    <div class="about-photo" aria-label="Foto del espacio de trabajo"></div>
+                    <div class="about-photo" aria-label="Foto de resultados"></div>
+                {% endif %}
+            </div>
+            <p>
+                Reemplaza estos bloques por fotos reales del salon o de tu trabajo
+                para dar confianza a nuevas clientas.
+            </p>
+        </div>
+    </div>
+{% endblock %}

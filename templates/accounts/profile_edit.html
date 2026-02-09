@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}Mi perfil{% endblock %}
+
+{% block content %}
+    <h2>Mi perfil</h2>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ user_form.non_field_errors }}
+        {{ profile_form.non_field_errors }}
+
+        <div class="card">
+            <label>Nombre</label><br />
+            {{ user_form.first_name }}
+            {{ user_form.first_name.errors }}
+        </div>
+
+        <div class="card">
+            <label>Apellido</label><br />
+            {{ user_form.last_name }}
+            {{ user_form.last_name.errors }}
+        </div>
+
+        <div class="card">
+            <label>Email</label><br />
+            {{ user_form.email }}
+            {{ user_form.email.errors }}
+        </div>
+
+        <div class="card">
+            <label>Telefono</label><br />
+            {{ profile_form.phone }}
+            {{ profile_form.phone.errors }}
+        </div>
+
+        <button type="submit">Guardar</button>
+    </form>
+{% endblock %}

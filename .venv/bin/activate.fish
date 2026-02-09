@@ -33,7 +33,7 @@ end
 # Unset irrelevant variables.
 deactivate nondestructive
 
-set -gx VIRTUAL_ENV /mnt/c/Users/kurtk/OneDrive/Escritorio/Empleabilidad/appointment-booking-system/.venv
+set -gx VIRTUAL_ENV /home/kurtunix/projects/appointment-booking-system/.venv
 
 set -gx _OLD_VIRTUAL_PATH $PATH
 set -gx PATH "$VIRTUAL_ENV/"bin $PATH

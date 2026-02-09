@@ -1,0 +1,25 @@
+from django.contrib import admin
+
+from .models import AboutPage, AboutPhoto, GalleryPage, GalleryPhoto
+
+
+class AboutPhotoInline(admin.TabularInline):
+    model = AboutPhoto
+    extra = 1
+
+
+@admin.register(AboutPage)
+class AboutPageAdmin(admin.ModelAdmin):
+    list_display = ("title", "updated_at")
+    inlines = [AboutPhotoInline]
+
+
+class GalleryPhotoInline(admin.TabularInline):
+    model = GalleryPhoto
+    extra = 1
+
+
+@admin.register(GalleryPage)
+class GalleryPageAdmin(admin.ModelAdmin):
+    list_display = ("title", "updated_at")
+    inlines = [GalleryPhotoInline]

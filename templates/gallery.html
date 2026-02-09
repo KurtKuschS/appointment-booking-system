@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}Galeria{% endblock %}
+
+{% block content %}
+    <h2>{{ gallery.title|default:"Galeria de trabajos" }}</h2>
+    {% if gallery and gallery.subtitle %}
+        <p>{{ gallery.subtitle }}</p>
+    {% endif %}
+
+    {% if user.is_staff %}
+        <a class="hero-cta" href="{% url 'gallery_edit' %}">Editar galeria</a>
+    {% endif %}
+
+    <div class="gallery-grid">
+        {% if gallery and gallery.photos.all %}
+            {% for item in gallery.photos.all %}
+                <div class="card">
+                    {% if item.before_image %}
+                        <div class="gallery-photo">
+                            <img src="{{ item.before_image.url }}" alt="Antes" />
+                            <span class="gallery-label">Antes</span>
+                        </div>
+                    {% endif %}
+                    {% if item.after_image %}
+                        <div class="gallery-photo">
+                            <img src="{{ item.after_image.url }}" alt="Despues" />
+                            <span class="gallery-label">Despues</span>
+                        </div>
+                    {% endif %}
+                    {% if item.caption %}
+                        <p>{{ item.caption }}</p>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No hay fotos aun.</p>
+        {% endif %}
+    </div>
+{% endblock %}

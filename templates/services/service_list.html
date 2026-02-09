@@ -9,6 +9,9 @@
         {% for service in services %}
             <div class="card">
                 <strong>{{ service.name }}</strong><br />
+                {% if service.description %}
+                    <span>{{ service.description }}</span><br />
+                {% endif %}
                 <span>{{ service.duration_minutes }} min</span>
                 <span class="badge">$ {{ service.price }}</span>
                 <div>

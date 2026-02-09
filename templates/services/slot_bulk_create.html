@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}Crear horarios{% endblock %}
+
+{% block content %}
+    <h2>Crear horarios masivo</h2>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+
+        <div class="card">
+            <label>{{ form.start_date.label }}</label><br />
+            {{ form.start_date }}
+            {{ form.start_date.errors }}
+        </div>
+
+        <div class="card">
+            <label>{{ form.end_date.label }}</label><br />
+            {{ form.end_date }}
+            {{ form.end_date.errors }}
+        </div>
+
+        <div class="card">
+            <label>{{ form.start_time.label }}</label><br />
+            {{ form.start_time }}
+            {{ form.start_time.errors }}
+        </div>
+
+        <div class="card">
+            <label>{{ form.end_time.label }}</label><br />
+            {{ form.end_time }}
+            {{ form.end_time.errors }}
+        </div>
+
+        <div class="card">
+            <label>{{ form.slot_minutes.label }}</label><br />
+            {{ form.slot_minutes }}
+            {{ form.slot_minutes.errors }}
+        </div>
+
+        <div class="card">
+            <label>{{ form.weekdays.label }}</label><br />
+            {{ form.weekdays }}
+            {{ form.weekdays.errors }}
+        </div>
+
+        <button type="submit">Crear horarios</button>
+    </form>
+{% endblock %}
