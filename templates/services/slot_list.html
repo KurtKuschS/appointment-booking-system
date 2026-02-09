@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}Gestionar horarios{% endblock %}
+
+{% block content %}
+    <h2 class="section-title">Gestionar horarios</h2>
+    <div class="service-meta">
+        <a class="btn" href="{% url 'slot_create' %}">Crear horario</a>
+        <a class="btn btn--ghost" href="{% url 'slot_bulk_create' %}">Carga masiva</a>
+        <a class="btn btn--ghost" href="{% url 'slot_delete_unreserved' %}">Eliminar no reservados</a>
+    </div>
+
+    <form method="get" class="form-card">
+        <div class="card">
+            <label>Filtrar por fecha</label><br />
+            <input class="input" type="date" name="date" value="{{ date_filter }}" />
+        </div>
+        <div class="card">
+            <label>Estado</label><br />
+            <select class="input" name="active">
+                <option value="">Todos</option>
+                <option value="1" {% if active_filter == "1" %}selected{% endif %}>Activos</option>
+                <option value="0" {% if active_filter == "0" %}selected{% endif %}>Inactivos</option>
+            </select>
+        </div>
+        <button type="submit">Filtrar</button>
+    </form>
+
+    {% if slots %}
+        <div class="service-grid">
+            {% for slot in slots %}
+                <div class="card service-card">
+                    <strong>{{ slot.date }} {{ slot.start_time }} - {{ slot.end_time }}</strong>
+                    <div class="service-meta">
+                        {% if slot.is_active %}
+                            <span class="badge">Activo</span>
+                        {% else %}
+                            <span class="badge badge--cancelled">Inactivo</span>
+                        {% endif %}
+                        {% if slot.booking %}
+                            <span class="badge badge--confirmed">Reservado</span>
+                        {% endif %}
+                    </div>
+                    <div class="service-meta">
+                        <a class="btn btn--ghost" href="{% url 'slot_update' slot.id %}">Editar</a>
+                        <a class="btn btn--ghost" href="{% url 'slot_delete' slot.id %}">Eliminar</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>No hay horarios.</p>
+    {% endif %}
+{% endblock %}

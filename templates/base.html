@@ -34,7 +34,7 @@
                     {% if user.is_staff %}
                         <a class="nav-link nav-link--admin" href="{% url 'admin_dashboard' %}">Dashboard</a>
                         <a class="nav-link nav-link--admin" href="{% url 'admin_booking_list' %}">Reservas</a>
-                        <a class="nav-link nav-link--admin" href="{% url 'slot_bulk_create' %}">Horarios</a>
+                        <a class="nav-link nav-link--admin" href="{% url 'slot_list' %}">Horarios</a>
                         <a class="nav-link nav-link--admin" href="{% url 'user_list' %}">Usuarios</a>
                     {% endif %}
                     <form method="post" action="{% url 'logout' %}">

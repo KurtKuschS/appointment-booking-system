@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}Eliminar horarios no reservados{% endblock %}
+
+{% block content %}
+    <h2 class="section-title">Eliminar horarios no reservados</h2>
+    <div class="card">
+        <p>Esta accion eliminara todos los horarios que no esten reservados.</p>
+        <p>Los horarios con reserva no se eliminaran.</p>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit">Confirmar</button>
+            <a class="btn btn--ghost" href="{% url 'slot_list' %}">Cancelar</a>
+        </form>
+    </div>
+{% endblock %}

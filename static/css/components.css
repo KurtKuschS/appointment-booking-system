@@ -150,6 +150,10 @@ button:hover,
     font-size: 14px;
 }
 
+.service-meta form {
+    margin: 0;
+}
+
 .service-price {
     font-weight: 600;
 }

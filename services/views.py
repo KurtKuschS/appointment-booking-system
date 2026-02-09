@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 from django.contrib.auth.decorators import user_passes_test
 from django.shortcuts import get_object_or_404, redirect, render
 
-from .forms import BulkSlotForm, ServiceForm
+from .forms import AvailabilitySlotForm, BulkSlotForm, ServiceForm
 from .models import AvailabilitySlot, Service
 
 
@@ -79,6 +79,71 @@ def slot_bulk_create(request):
 @user_passes_test(_is_staff)
 def slot_bulk_create_success(request):
 	return render(request, "services/slot_bulk_success.html")
+
+
+@user_passes_test(_is_staff)
+def slot_list(request):
+	date_filter = request.GET.get("date")
+	active_filter = request.GET.get("active")
+
+	slots = AvailabilitySlot.objects.all().order_by("date", "start_time")
+	if date_filter:
+		slots = slots.filter(date=date_filter)
+	if active_filter in ["0", "1"]:
+		slots = slots.filter(is_active=active_filter == "1")
+
+	context = {
+		"slots": slots,
+		"date_filter": date_filter,
+		"active_filter": active_filter,
+	}
+	return render(request, "services/slot_list.html", context)
+
+
+@user_passes_test(_is_staff)
+def slot_create(request):
+	if request.method == "POST":
+		form = AvailabilitySlotForm(request.POST)
+		if form.is_valid():
+			form.save()
+			return redirect("slot_list")
+	else:
+		form = AvailabilitySlotForm()
+
+	return render(request, "services/slot_form.html", {"form": form, "title": "Crear horario"})
+
+
+@user_passes_test(_is_staff)
+def slot_update(request, pk):
+	slot = get_object_or_404(AvailabilitySlot, pk=pk)
+	if request.method == "POST":
+		form = AvailabilitySlotForm(request.POST, instance=slot)
+		if form.is_valid():
+			form.save()
+			return redirect("slot_list")
+	else:
+		form = AvailabilitySlotForm(instance=slot)
+
+	return render(request, "services/slot_form.html", {"form": form, "title": "Editar horario"})
+
+
+@user_passes_test(_is_staff)
+def slot_delete(request, pk):
+	slot = get_object_or_404(AvailabilitySlot, pk=pk)
+	if request.method == "POST":
+		slot.delete()
+		return redirect("slot_list")
+
+	return render(request, "services/slot_confirm_delete.html", {"slot": slot})
+
+
+@user_passes_test(_is_staff)
+def slot_delete_unreserved(request):
+	if request.method == "POST":
+		AvailabilitySlot.objects.filter(booking__isnull=True).delete()
+		return redirect("slot_list")
+
+	return render(request, "services/slot_confirm_delete_unreserved.html")
 
 
 def _create_slots_from_form(data):

@@ -3,7 +3,11 @@
 {% block title %}Crear horarios{% endblock %}
 
 {% block content %}
-    <h2>Crear horarios masivo</h2>
+    <h2 class="section-title">Crear horarios masivo</h2>
+    <div class="service-meta">
+        <a class="btn btn--ghost" href="{% url 'slot_list' %}">Gestionar horarios</a>
+        <a class="btn btn--ghost" href="{% url 'slot_create' %}">Crear horario individual</a>
+    </div>
 
     <form method="post">
         {% csrf_token %}

@@ -1,7 +1,7 @@
 from django import forms
 from django.utils import timezone
 
-from .models import Service
+from .models import AvailabilitySlot, Service
 
 
 class BulkSlotForm(forms.Form):
@@ -71,6 +71,22 @@ class ServiceForm(forms.ModelForm):
         fields = ("name", "description", "duration_minutes", "price", "is_active")
         widgets = {
             "description": forms.Textarea(attrs={"rows": 4}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field_name in self.fields:
+            self.fields[field_name].widget.attrs.update({"class": "input"})
+
+
+class AvailabilitySlotForm(forms.ModelForm):
+    class Meta:
+        model = AvailabilitySlot
+        fields = ("date", "start_time", "end_time", "is_active")
+        widgets = {
+            "date": forms.DateInput(attrs={"type": "date"}),
+            "start_time": forms.TimeInput(attrs={"type": "time"}),
+            "end_time": forms.TimeInput(attrs={"type": "time"}),
         }
 
     def __init__(self, *args, **kwargs):
