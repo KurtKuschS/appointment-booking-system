@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}Servicios{% endblock %}
+
+{% block content %}
+    <h2>Servicios disponibles</h2>
+
+    {% if services %}
+        {% for service in services %}
+            <div class="card">
+                <strong>{{ service.name }}</strong><br />
+                <span>{{ service.duration_minutes }} min</span>
+                <span class="badge">$ {{ service.price }}</span>
+                <div>
+                    <a href="{% url 'booking_create' %}?service={{ service.id }}">Reservar</a>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>No hay servicios activos.</p>
+    {% endif %}
+{% endblock %}

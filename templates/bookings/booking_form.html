@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}Nueva reserva{% endblock %}
+
+{% block content %}
+    <h2>Nueva reserva</h2>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+
+        <div class="card">
+            <label>Servicio</label><br />
+            {{ form.service }}
+        </div>
+
+        <div class="card">
+            <label>Horario</label><br />
+            {{ form.slot }}
+            {{ form.slot.errors }}
+        </div>
+
+        <button type="submit">Reservar</button>
+    </form>
+{% endblock %}

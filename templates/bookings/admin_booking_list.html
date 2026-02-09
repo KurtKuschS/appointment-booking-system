@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}Admin reservas{% endblock %}
+
+{% block content %}
+    <h2>Reservas (admin)</h2>
+
+    {% if bookings %}
+        {% for booking in bookings %}
+            <div class="card">
+                <strong>{{ booking.client.get_full_name|default:booking.client.username }}</strong><br />
+                <span>{{ booking.service.name }}</span><br />
+                <span>{{ booking.slot.date }} {{ booking.slot.start_time }} - {{ booking.slot.end_time }}</span><br />
+                <span class="badge">{{ booking.get_status_display }}</span>
+
+                <form method="post" action="{% url 'admin_booking_update_status' booking.id %}">
+                    {% csrf_token %}
+                    <label>Estado</label><br />
+                    <select name="status">
+                        {% for value, label in status_choices %}
+                            <option value="{{ value }}" {% if booking.status == value %}selected{% endif %}>{{ label }}</option>
+                        {% endfor %}
+                    </select>
+                    <button type="submit">Actualizar</button>
+                </form>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>No hay reservas.</p>
+    {% endif %}
+{% endblock %}

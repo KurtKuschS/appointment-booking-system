@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}Mis reservas{% endblock %}
+
+{% block content %}
+    <h2>Mis reservas</h2>
+
+    {% if bookings %}
+        {% for booking in bookings %}
+            <div class="card">
+                <strong>{{ booking.service.name }}</strong><br />
+                <span>{{ booking.slot.date }} {{ booking.slot.start_time }} - {{ booking.slot.end_time }}</span><br />
+                <span class="badge">{{ booking.get_status_display }}</span>
+                {% if booking.status != "cancelled" and booking.status != "completed" %}
+                    <div>
+                        <a href="{% url 'booking_cancel' booking.id %}">Cancelar</a>
+                    </div>
+                {% endif %}
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>No tienes reservas aun.</p>
+    {% endif %}
+{% endblock %}
