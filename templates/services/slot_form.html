@@ -3,31 +3,31 @@
 {% block title %}{{ title }}{% endblock %}
 
 {% block content %}
-    <h2 class="section-title">{{ title }}</h2>
+    <h1 class="section-title">{{ title }}</h1>
 
     <form method="post" class="form-card">
         {% csrf_token %}
 
         <div class="card">
-            <label>Fecha</label><br />
+            <label for="{{ form.date.id_for_label }}">Fecha</label><br />
             {{ form.date }}
             {{ form.date.errors }}
         </div>
 
         <div class="card">
-            <label>Hora inicio</label><br />
+            <label for="{{ form.start_time.id_for_label }}">Hora inicio</label><br />
             {{ form.start_time }}
             {{ form.start_time.errors }}
         </div>
 
         <div class="card">
-            <label>Hora termino</label><br />
+            <label for="{{ form.end_time.id_for_label }}">Hora termino</label><br />
             {{ form.end_time }}
             {{ form.end_time.errors }}
         </div>
 
         <div class="card">
-            <label>Activo</label><br />
+            <label for="{{ form.is_active.id_for_label }}">Activo</label><br />
             {{ form.is_active }}
             {{ form.is_active.errors }}
         </div>

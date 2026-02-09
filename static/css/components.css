@@ -23,6 +23,7 @@
 
 .badge--pending {
     background: var(--warning);
+    color: #1f1f1f;
 }
 
 .badge--confirmed {
@@ -356,6 +357,57 @@ button:hover,
     margin-top: 6px;
 }
 
+.kpi-grid {
+    display: grid;
+    gap: 14px;
+    margin-bottom: 16px;
+}
+
+.kpi-card {
+    display: grid;
+    gap: 6px;
+}
+
+.kpi-label {
+    color: var(--muted);
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+}
+
+.kpi-value {
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.dashboard-grid {
+    display: grid;
+    gap: 16px;
+}
+
+.stat-list {
+    list-style: none;
+    padding: 0;
+    margin: 12px 0 0 0;
+    display: grid;
+    gap: 10px;
+}
+
+.stat-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 600;
+    color: var(--text);
+}
+
+.stat-list span {
+    background: #efe3e0;
+    border-radius: 999px;
+    padding: 4px 10px;
+    font-size: 12px;
+}
+
 @media (min-width: 768px) {
     .hero-grid {
         grid-template-columns: 1.2fr 1fr;
@@ -378,6 +430,15 @@ button:hover,
     .about-grid,
     .contact-grid {
         grid-template-columns: 1.1fr 1fr;
+        align-items: start;
+    }
+
+    .kpi-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .dashboard-grid {
+        grid-template-columns: repeat(3, 1fr);
         align-items: start;
     }
 }

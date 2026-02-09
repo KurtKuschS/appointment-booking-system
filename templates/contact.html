@@ -3,7 +3,7 @@
 {% block title %}Contacto{% endblock %}
 
 {% block content %}
-    <h2 class="section-title">{{ contact.title|default:"Contacto" }}</h2>
+    <h1 class="section-title">{{ contact.title|default:"Contacto" }}</h1>
 
     {% if user.is_staff %}
         <a class="hero-cta" href="{% url 'contact_edit' %}">Editar contacto</a>
@@ -11,9 +11,9 @@
 
     <div class="contact-grid">
         <div class="card">
-            <h3>Informacion de contacto</h3>
-            <p><strong>Direccion</strong><br />{{ contact.address|default:"" }}</p>
-            <p><strong>Horario</strong><br />{{ contact.schedule|default:"" }}</p>
+            <h2>Informacion de contacto</h2>
+            <p><strong>Direccion</strong><br />{{ contact.address|default:""|linebreaksbr }}</p>
+            <p><strong>Horario</strong><br />{{ contact.schedule|default:""|linebreaksbr }}</p>
             <p><strong>Telefono</strong><br />{{ contact.phone|default:"" }}</p>
 
             <div class="contact-actions">
@@ -32,13 +32,15 @@
         </div>
 
         <div class="card">
-            <h3>Ubicacion</h3>
+            <h2>Ubicacion</h2>
             {% if contact.map_embed_url %}
                 <iframe
                     class="contact-map"
                     src="{{ contact.map_embed_url }}"
                     loading="lazy"
                     referrerpolicy="no-referrer-when-downgrade"
+                    sandbox="allow-scripts allow-same-origin allow-popups"
+                    title="Mapa de ubicacion"
                 ></iframe>
             {% else %}
                 <p>Agrega el enlace embed de Google Maps.</p>

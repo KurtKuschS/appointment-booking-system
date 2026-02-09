@@ -3,21 +3,22 @@
 {% block title %}Editar galeria{% endblock %}
 
 {% block content %}
-    <h2>Editar galeria</h2>
+    <h1 class="section-title">Editar galeria</h1>
 
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
 
+        {{ page_form.non_field_errors }}
         {{ formset.non_form_errors }}
 
         <div class="card">
-            <label>Titulo</label><br />
+            <label for="{{ page_form.title.id_for_label }}">Titulo</label><br />
             {{ page_form.title }}
             {{ page_form.title.errors }}
         </div>
 
         <div class="card">
-            <label>Subtitulo</label><br />
+            <label for="{{ page_form.subtitle.id_for_label }}">Subtitulo</label><br />
             {{ page_form.subtitle }}
             {{ page_form.subtitle.errors }}
         </div>
@@ -42,26 +43,24 @@
                         </div>
                     {% endif %}
 
-                    <label>Antes</label><br />
+                    <label for="{{ form.before_image.id_for_label }}">Antes</label><br />
                     {{ form.before_image }}
                     {{ form.before_image.errors }}
 
-                    <label>Despues</label><br />
+                    <label for="{{ form.after_image.id_for_label }}">Despues</label><br />
                     {{ form.after_image }}
                     {{ form.after_image.errors }}
 
-                    <label>Descripcion</label><br />
+                    <label for="{{ form.caption.id_for_label }}">Descripcion</label><br />
                     {{ form.caption }}
                     {{ form.caption.errors }}
 
-                    <label>Orden</label><br />
+                    <label for="{{ form.order.id_for_label }}">Orden</label><br />
                     {{ form.order }}
                     {{ form.order.errors }}
 
                     {% if form.DELETE %}
-                        <label>
-                            {{ form.DELETE }} Eliminar
-                        </label>
+                        <label for="{{ form.DELETE.id_for_label }}">{{ form.DELETE }} Eliminar</label>
                     {% endif %}
                 </div>
             {% endfor %}

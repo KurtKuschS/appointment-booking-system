@@ -46,6 +46,7 @@ def _is_staff(user):
 
 
 @user_passes_test(_is_staff)
+@login_required
 def user_list(request):
 	users = (
 		User.objects.filter(is_staff=False)

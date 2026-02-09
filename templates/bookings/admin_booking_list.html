@@ -3,7 +3,7 @@
 {% block title %}Admin reservas{% endblock %}
 
 {% block content %}
-    <h2>Reservas (admin)</h2>
+    <h1 class="section-title">Reservas (admin)</h1>
 
     {% if bookings %}
         {% for booking in bookings %}
@@ -15,8 +15,8 @@
 
                 <form method="post" action="{% url 'admin_booking_update_status' booking.id %}">
                     {% csrf_token %}
-                    <label>Estado</label><br />
-                    <select name="status">
+                    <label for="status-{{ booking.id }}">Estado</label><br />
+                    <select id="status-{{ booking.id }}" name="status">
                         {% for value, label in status_choices %}
                             <option value="{{ value }}" {% if booking.status == value %}selected{% endif %}>{{ label }}</option>
                         {% endfor %}

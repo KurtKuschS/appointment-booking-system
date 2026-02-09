@@ -3,7 +3,7 @@
 {% block title %}Mis reservas{% endblock %}
 
 {% block content %}
-    <h2 class="section-title">Mis reservas</h2>
+    <h1 class="section-title">Mis reservas</h1>
 
     {% if bookings %}
         {% for booking in bookings %}
@@ -16,7 +16,10 @@
                 <span class="badge badge--{{ booking.status }}">{{ booking.get_status_display }}</span>
                 {% if booking.status != "cancelled" and booking.status != "completed" %}
                     <div>
-                        <a class="btn btn--ghost" href="{% url 'booking_cancel' booking.id %}">Cancelar</a>
+                        <form method="post" action="{% url 'booking_cancel' booking.id %}">
+                            {% csrf_token %}
+                            <button class="btn btn--ghost" type="submit">Cancelar</button>
+                        </form>
                     </div>
                 {% endif %}
             </div>

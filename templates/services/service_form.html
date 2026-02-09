@@ -3,37 +3,37 @@
 {% block title %}{{ title }}{% endblock %}
 
 {% block content %}
-    <h2 class="section-title">{{ title }}</h2>
+    <h1 class="section-title">{{ title }}</h1>
 
     <form method="post" class="form-card">
         {% csrf_token %}
 
         <div class="card">
-            <label>Nombre</label><br />
+            <label for="{{ form.name.id_for_label }}">Nombre</label><br />
             {{ form.name }}
             {{ form.name.errors }}
         </div>
 
         <div class="card">
-            <label>Descripcion</label><br />
+            <label for="{{ form.description.id_for_label }}">Descripcion</label><br />
             {{ form.description }}
             {{ form.description.errors }}
         </div>
 
         <div class="card">
-            <label>Duracion (min)</label><br />
+            <label for="{{ form.duration_minutes.id_for_label }}">Duracion (min)</label><br />
             {{ form.duration_minutes }}
             {{ form.duration_minutes.errors }}
         </div>
 
         <div class="card">
-            <label>Precio</label><br />
+            <label for="{{ form.price.id_for_label }}">Precio</label><br />
             {{ form.price }}
             {{ form.price.errors }}
         </div>
 
         <div class="card">
-            <label>Activo</label><br />
+            <label for="{{ form.is_active.id_for_label }}">Activo</label><br />
             {{ form.is_active }}
             {{ form.is_active.errors }}
         </div>

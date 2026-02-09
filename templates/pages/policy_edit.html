@@ -3,31 +3,33 @@
 {% block title %}Editar politicas{% endblock %}
 
 {% block content %}
-    <h2>Editar politicas</h2>
+    <h1 class="section-title">Editar politicas</h1>
 
     <form method="post">
         {% csrf_token %}
 
+        {{ form.non_field_errors }}
+
         <div class="card">
-            <label>Titulo</label><br />
+            <label for="{{ form.title.id_for_label }}">Titulo</label><br />
             {{ form.title }}
             {{ form.title.errors }}
         </div>
 
         <div class="card">
-            <label>Politicas de cancelacion</label><br />
+            <label for="{{ form.cancellation.id_for_label }}">Politicas de cancelacion</label><br />
             {{ form.cancellation }}
             {{ form.cancellation.errors }}
         </div>
 
         <div class="card">
-            <label>Politicas de atraso</label><br />
+            <label for="{{ form.lateness.id_for_label }}">Politicas de atraso</label><br />
             {{ form.lateness }}
             {{ form.lateness.errors }}
         </div>
 
         <div class="card">
-            <label>Reglas antes y despues</label><br />
+            <label for="{{ form.before_after.id_for_label }}">Reglas antes y despues</label><br />
             {{ form.before_after }}
             {{ form.before_after.errors }}
         </div>

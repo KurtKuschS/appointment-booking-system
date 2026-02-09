@@ -3,17 +3,17 @@
 {% block title %}Nueva reserva{% endblock %}
 
 {% block content %}
-    <h2 class="section-title">Nueva reserva</h2>
+    <h1 class="section-title">Nueva reserva</h1>
 
     <form method="get" class="form-card">
         <div class="card">
-            <label>Servicio</label><br />
+            <label for="{{ filter_form.service.id_for_label }}">Servicio</label><br />
             {{ filter_form.service }}
             {{ filter_form.service.errors }}
         </div>
 
         <div class="card">
-            <label>Fecha</label><br />
+            <label for="{{ filter_form.date.id_for_label }}">Fecha</label><br />
             <div class="calendar" id="calendar" data-selected="{{ selected_date }}">
                 <div class="calendar-header">
                     <span class="calendar-title" id="calendar-title"></span>
@@ -41,9 +41,9 @@
         <input type="hidden" name="date" value="{{ selected_date }}" />
 
         <div class="card">
-            <label>Horario</label><br />
+            <label id="slot-label">Horario</label><br />
             {% if slots %}
-                <div class="slot-grid" id="slot-grid">
+                <div class="slot-grid" id="slot-grid" role="radiogroup" aria-labelledby="slot-label">
                     {% for slot in slots %}
                         <label class="slot-option">
                             <input
@@ -78,6 +78,8 @@
             const prevBtn = document.getElementById("calendar-prev");
             const nextBtn = document.getElementById("calendar-next");
             const selected = calendar.dataset.selected;
+            const slotGrid = document.getElementById("slot-grid");
+            const slotOptions = slotGrid ? slotGrid.querySelectorAll(".slot-option") : [];
 
             if (!dateInput) {
                 return;
@@ -177,14 +179,16 @@
             renderWeekdays();
             renderCalendar();
 
-            document.addEventListener("change", function (event) {
-                if (event.target && event.target.name === "slot") {
-                    document.querySelectorAll(".slot-option").forEach((option) => {
-                        option.classList.remove("is-selected");
-                    });
-                    event.target.closest(".slot-option").classList.add("is-selected");
-                }
-            });
+            if (slotGrid) {
+                slotGrid.addEventListener("change", function (event) {
+                    if (event.target && event.target.name === "slot") {
+                        slotOptions.forEach((option) => {
+                            option.classList.remove("is-selected");
+                        });
+                        event.target.closest(".slot-option").classList.add("is-selected");
+                    }
+                });
+            }
         })();
     </script>
 {% endblock %}

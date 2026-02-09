@@ -37,6 +37,17 @@ class BookingCreateForm(forms.ModelForm):
 
     def clean_slot(self):
         slot = self.cleaned_data["slot"]
+        today = timezone.localdate()
+        if not slot.is_active:
+            raise forms.ValidationError("Este horario no esta disponible.")
+        if slot.date < today:
+            raise forms.ValidationError("No puedes reservar en una fecha pasada.")
         if hasattr(slot, "booking"):
             raise forms.ValidationError("Este horario ya fue reservado.")
         return slot
+
+    def clean_service(self):
+        service = self.cleaned_data["service"]
+        if not service.is_active:
+            raise forms.ValidationError("El servicio seleccionado no esta disponible.")
+        return service

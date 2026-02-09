@@ -3,24 +3,24 @@
 {% block title %}Politicas{% endblock %}
 
 {% block content %}
-    <h2 class="section-title">{{ policy.title|default:"Politicas del salon" }}</h2>
+    <h1 class="section-title">{{ policy.title|default:"Politicas del salon" }}</h1>
 
     {% if user.is_staff %}
         <a class="hero-cta" href="{% url 'policy_edit' %}">Editar politicas</a>
     {% endif %}
 
     <div class="card policy-section">
-        <h3>Politicas de cancelacion</h3>
-        <p>{{ policy.cancellation|default:"" }}</p>
+        <h2>Politicas de cancelacion</h2>
+        <p>{{ policy.cancellation|default:""|linebreaksbr }}</p>
     </div>
 
     <div class="card policy-section">
-        <h3>Politicas de atraso</h3>
-        <p>{{ policy.lateness|default:"" }}</p>
+        <h2>Politicas de atraso</h2>
+        <p>{{ policy.lateness|default:""|linebreaksbr }}</p>
     </div>
 
     <div class="card policy-section">
-        <h3>Antes y despues del servicio</h3>
-        <p>{{ policy.before_after|default:"" }}</p>
+        <h2>Antes y despues del servicio</h2>
+        <p>{{ policy.before_after|default:""|linebreaksbr }}</p>
     </div>
 {% endblock %}

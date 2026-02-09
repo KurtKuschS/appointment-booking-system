@@ -3,42 +3,76 @@
 {% block title %}Dashboard{% endblock %}
 
 {% block content %}
-    <h2>Dashboard</h2>
+    <h1 class="section-title">Dashboard</h1>
+    <p class="section-subtitle">Resumen rapido del mes y la actividad de hoy.</p>
 
-    <div class="card">
-        <strong>Ingresos del mes ({{ month_label }})</strong><br />
-        <span class="badge">$ {{ income_total }}</span>
+    <div class="kpi-grid">
+        <div class="card kpi-card">
+            <span class="kpi-label">Ingresos del mes ({{ month_label }})</span>
+            <span class="kpi-value">$ {{ income_total }}</span>
+        </div>
+        <div class="card kpi-card">
+            <span class="kpi-label">Reservas del mes</span>
+            <span class="kpi-value">{{ month_total }}</span>
+        </div>
+        <div class="card kpi-card">
+            <span class="kpi-label">Cancelaciones</span>
+            <span class="kpi-value">{{ month_cancelled }} ({{ cancellation_rate }}%)</span>
+        </div>
+        <div class="card kpi-card">
+            <span class="kpi-label">Reservas hoy</span>
+            <span class="kpi-value">{{ today_total }}</span>
+        </div>
+        <div class="card kpi-card">
+            <span class="kpi-label">Pendientes hoy</span>
+            <span class="kpi-value">{{ today_upcoming }}</span>
+        </div>
     </div>
 
-    <div class="card">
-        <strong>Servicios mas solicitados</strong>
-        {% if top_services %}
-            <ul>
-                {% for item in top_services %}
-                    <li>{{ item.service__name }} - {{ item.total }}</li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <p>No hay datos.</p>
-        {% endif %}
-    </div>
+    <div class="dashboard-grid">
+        <div class="card">
+            <strong>Servicios mas solicitados</strong>
+            {% if top_services %}
+                <ul class="stat-list">
+                    {% for item in top_services %}
+                        <li>{{ item.service__name }} <span>{{ item.total }}</span></li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No hay datos.</p>
+            {% endif %}
+        </div>
 
-    <div class="card">
-        <strong>Clientas frecuentes</strong>
-        {% if top_clients %}
-            <ul>
-                {% for item in top_clients %}
-                    <li>
-                        {{ item.client__first_name }} {{ item.client__last_name }}
-                        {% if not item.client__first_name and not item.client__last_name %}
-                            {{ item.client__username }}
-                        {% endif %}
-                        - {{ item.total }}
-                    </li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <p>No hay datos.</p>
-        {% endif %}
+        <div class="card">
+            <strong>Horas con mas demanda</strong>
+            {% if top_hours %}
+                <ul class="stat-list">
+                    {% for item in top_hours %}
+                        <li>{{ item.hour }}:00 <span>{{ item.total }}</span></li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No hay datos.</p>
+            {% endif %}
+        </div>
+
+        <div class="card">
+            <strong>Clientas frecuentes</strong>
+            {% if top_clients %}
+                <ul class="stat-list">
+                    {% for item in top_clients %}
+                        <li>
+                            {{ item.client__first_name }} {{ item.client__last_name }}
+                            {% if not item.client__first_name and not item.client__last_name %}
+                                {{ item.client__username }}
+                            {% endif %}
+                            <span>{{ item.total }}</span>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No hay datos.</p>
+            {% endif %}
+        </div>
     </div>
 {% endblock %}

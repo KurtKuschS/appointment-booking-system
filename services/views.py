@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 
 from django.contrib import messages
-from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.shortcuts import get_object_or_404, redirect, render
 
 from .forms import AvailabilitySlotForm, BulkSlotForm, ServiceForm
@@ -19,12 +19,14 @@ def _is_staff(user):
 
 
 @user_passes_test(_is_staff)
+@login_required
 def service_admin_list(request):
 	services = Service.objects.all().order_by("name")
 	return render(request, "services/service_admin_list.html", {"services": services})
 
 
 @user_passes_test(_is_staff)
+@login_required
 def service_create(request):
 	if request.method == "POST":
 		form = ServiceForm(request.POST)
@@ -38,6 +40,7 @@ def service_create(request):
 
 
 @user_passes_test(_is_staff)
+@login_required
 def service_update(request, pk):
 	service = get_object_or_404(Service, pk=pk)
 	if request.method == "POST":
@@ -53,6 +56,7 @@ def service_update(request, pk):
 
 
 @user_passes_test(_is_staff)
+@login_required
 def service_delete(request, pk):
 	service = get_object_or_404(Service, pk=pk)
 	if request.method == "POST":
@@ -63,6 +67,7 @@ def service_delete(request, pk):
 
 
 @user_passes_test(_is_staff)
+@login_required
 def slot_bulk_create(request):
 	created_count = 0
 	if request.method == "POST":
@@ -78,11 +83,13 @@ def slot_bulk_create(request):
 
 
 @user_passes_test(_is_staff)
+@login_required
 def slot_bulk_create_success(request):
 	return render(request, "services/slot_bulk_success.html")
 
 
 @user_passes_test(_is_staff)
+@login_required
 def slot_list(request):
 	date_filter = request.GET.get("date")
 	active_filter = request.GET.get("active")
@@ -102,6 +109,7 @@ def slot_list(request):
 
 
 @user_passes_test(_is_staff)
+@login_required
 def slot_create(request):
 	if request.method == "POST":
 		form = AvailabilitySlotForm(request.POST)
@@ -115,6 +123,7 @@ def slot_create(request):
 
 
 @user_passes_test(_is_staff)
+@login_required
 def slot_update(request, pk):
 	slot = get_object_or_404(AvailabilitySlot, pk=pk)
 	if request.method == "POST":
@@ -129,6 +138,7 @@ def slot_update(request, pk):
 
 
 @user_passes_test(_is_staff)
+@login_required
 def slot_delete(request, pk):
 	slot = get_object_or_404(AvailabilitySlot, pk=pk)
 	booking = getattr(slot, "booking", None)
@@ -150,6 +160,7 @@ def slot_delete(request, pk):
 
 
 @user_passes_test(_is_staff)
+@login_required
 def slot_delete_unreserved(request):
 	if request.method == "POST":
 		AvailabilitySlot.objects.filter(booking__isnull=True).delete()

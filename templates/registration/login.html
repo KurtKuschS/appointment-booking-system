@@ -3,19 +3,19 @@
 {% block title %}Ingresar{% endblock %}
 
 {% block content %}
-    <h2>Ingresar</h2>
+    <h1 class="section-title">Ingresar</h1>
 
     <form method="post">
         {% csrf_token %}
         {{ form.non_field_errors }}
 
         <div class="card">
-            <label>Usuario</label><br />
+            <label for="{{ form.username.id_for_label }}">Usuario</label><br />
             {{ form.username }}
         </div>
 
         <div class="card">
-            <label>Contrasena</label><br />
+            <label for="{{ form.password.id_for_label }}">Contrasena</label><br />
             {{ form.password }}
         </div>
 

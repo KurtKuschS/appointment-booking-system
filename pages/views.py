@@ -1,5 +1,5 @@
 from django.contrib import messages
-from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.decorators import login_required, user_passes_test
 import logging
 
 from django.db.models import Max
@@ -24,6 +24,7 @@ def _is_staff(user):
 
 
 @user_passes_test(_is_staff)
+@login_required
 def about_edit(request):
     about_page, _ = AboutPage.objects.get_or_create(id=1)
 
@@ -54,10 +55,17 @@ def about_edit(request):
 
 def gallery(request):
     page = GalleryPage.objects.prefetch_related("photos").first()
-    return render(request, "gallery.html", {"gallery": page})
+    gallery_photos = list(page.photos.all()) if page else []
+    context = {
+        "gallery": page,
+        "gallery_photos": gallery_photos,
+        "has_gallery_photos": bool(gallery_photos),
+    }
+    return render(request, "gallery.html", context)
 
 
 @user_passes_test(_is_staff)
+@login_required
 def gallery_edit(request):
     gallery_page, _ = GalleryPage.objects.get_or_create(id=1)
 
@@ -113,6 +121,7 @@ def contact(request):
 
 
 @user_passes_test(_is_staff)
+@login_required
 def contact_edit(request):
     contact_page, _ = ContactPage.objects.get_or_create(id=1)
 
@@ -134,6 +143,7 @@ def policy(request):
 
 
 @user_passes_test(_is_staff)
+@login_required
 def policy_edit(request):
     policy_page, _ = PolicyPage.objects.get_or_create(id=1)
 

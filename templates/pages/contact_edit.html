@@ -3,49 +3,51 @@
 {% block title %}Editar contacto{% endblock %}
 
 {% block content %}
-    <h2>Editar contacto</h2>
+    <h1 class="section-title">Editar contacto</h1>
 
     <form method="post">
         {% csrf_token %}
 
+        {{ form.non_field_errors }}
+
         <div class="card">
-            <label>Titulo</label><br />
+            <label for="{{ form.title.id_for_label }}">Titulo</label><br />
             {{ form.title }}
             {{ form.title.errors }}
         </div>
 
         <div class="card">
-            <label>Direccion</label><br />
+            <label for="{{ form.address.id_for_label }}">Direccion</label><br />
             {{ form.address }}
             {{ form.address.errors }}
         </div>
 
         <div class="card">
-            <label>Horario</label><br />
+            <label for="{{ form.schedule.id_for_label }}">Horario</label><br />
             {{ form.schedule }}
             {{ form.schedule.errors }}
         </div>
 
         <div class="card">
-            <label>Telefono</label><br />
+            <label for="{{ form.phone.id_for_label }}">Telefono</label><br />
             {{ form.phone }}
             {{ form.phone.errors }}
         </div>
 
         <div class="card">
-            <label>WhatsApp</label><br />
+            <label for="{{ form.whatsapp.id_for_label }}">WhatsApp</label><br />
             {{ form.whatsapp }}
             {{ form.whatsapp.errors }}
         </div>
 
         <div class="card">
-            <label>Email</label><br />
+            <label for="{{ form.email.id_for_label }}">Email</label><br />
             {{ form.email }}
             {{ form.email.errors }}
         </div>
 
         <div class="card">
-            <label>Google Maps embed URL</label><br />
+            <label for="{{ form.map_embed_url.id_for_label }}">Google Maps embed URL</label><br />
             {{ form.map_embed_url }}
             {{ form.map_embed_url.errors }}
             <small>Pega el enlace del iframe de Google Maps (src).</small>

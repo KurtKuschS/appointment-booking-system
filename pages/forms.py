@@ -1,6 +1,8 @@
 import re
+from urllib.parse import urlparse
 
 from django import forms
+from django.core.validators import URLValidator
 
 from .models import AboutPage, AboutPhoto, ContactPage, GalleryPage, GalleryPhoto, PolicyPage
 
@@ -30,6 +32,13 @@ class AboutPhotoForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         for field_name in self.fields:
             self.fields[field_name].widget.attrs.update({"class": "input"})
+
+    def clean_image(self):
+        image = self.cleaned_data.get("image")
+        if not image:
+            return image
+        _validate_image_upload(image)
+        return image
 
 
 class GalleryPageForm(forms.ModelForm):
@@ -72,6 +81,20 @@ class GalleryPhotoForm(forms.ModelForm):
 
         return cleaned
 
+    def clean_before_image(self):
+        image = self.cleaned_data.get("before_image")
+        if not image:
+            return image
+        _validate_image_upload(image)
+        return image
+
+    def clean_after_image(self):
+        image = self.cleaned_data.get("after_image")
+        if not image:
+            return image
+        _validate_image_upload(image)
+        return image
+
 
 class ContactPageForm(forms.ModelForm):
     map_embed_url = forms.CharField(required=False)
@@ -94,13 +117,37 @@ class ContactPageForm(forms.ModelForm):
         if not value:
             return value
 
+        value = value.strip()
+
         if "<iframe" in value:
             match = re.search(r'src=["\"]([^"\"]+)["\"]', value)
             if not match:
                 raise forms.ValidationError("No se encontro el src del iframe.")
-            return match.group(1)
+            value = match.group(1)
+
+        validator = URLValidator(schemes=["https"])
+        try:
+            validator(value)
+        except forms.ValidationError as exc:
+            raise forms.ValidationError("El enlace de mapa no es valido.") from exc
+
+        parsed = urlparse(value)
+        allowed_hosts = {"www.google.com", "google.com", "maps.google.com"}
+        if parsed.netloc not in allowed_hosts:
+            raise forms.ValidationError("Solo se permite un enlace embed de Google Maps.")
 
         return value
+
+
+def _validate_image_upload(image):
+    allowed_types = {"image/jpeg", "image/jpg", "image/png", "image/webp"}
+    max_size = 5 * 1024 * 1024
+    content_type = getattr(image, "content_type", "")
+
+    if content_type not in allowed_types:
+        raise forms.ValidationError("Formato de imagen no permitido.")
+    if image.size > max_size:
+        raise forms.ValidationError("La imagen supera el limite de 5MB.")
 
 
 class PolicyPageForm(forms.ModelForm):

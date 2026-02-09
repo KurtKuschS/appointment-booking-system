@@ -3,17 +3,17 @@
 {% block title %}Sobre el salon{% endblock %}
 
 {% block content %}
-    <h2 class="section-title">{{ about.title|default:"Sobre el salon" }}</h2>
+    <h1 class="section-title">{{ about.title|default:"Sobre el salon" }}</h1>
     {% if user.is_staff %}
         <a class="hero-cta" href="{% url 'about_edit' %}">Editar contenido</a>
     {% endif %}
 
     <div class="about-grid">
         <div class="card">
-            <h3>Historia</h3>
+            <h2>Historia</h2>
             <p>
                 {% if about and about.story %}
-                    {{ about.story }}
+                    {{ about.story|linebreaksbr }}
                 {% else %}
                     Salon Lash nacio para realzar miradas con tecnicas seguras y resultados naturales.
                     Empezo como un proyecto personal y hoy atiende a clientas que buscan un trato cercano
@@ -21,9 +21,9 @@
                 {% endif %}
             </p>
 
-            <h3>Experiencia y especializaciones</h3>
+            <h2>Experiencia y especializaciones</h2>
             {% if about and about.experience %}
-                <p>{{ about.experience }}</p>
+                <p>{{ about.experience|linebreaksbr }}</p>
             {% else %}
                 <ul class="about-list">
                     <li>Extensiones clasicas e hibridas</li>
@@ -33,9 +33,9 @@
                 </ul>
             {% endif %}
 
-            <h3>Certificaciones</h3>
+            <h2>Certificaciones</h2>
             {% if about and about.certifications %}
-                <p>{{ about.certifications }}</p>
+                <p>{{ about.certifications|linebreaksbr }}</p>
             {% else %}
                 <ul class="about-list">
                     <li>Certificacion en extensiones clasicas</li>
@@ -46,19 +46,19 @@
         </div>
 
         <div class="card">
-            <h3>Fotos del salon</h3>
+            <h2>Fotos del salon</h2>
             <div class="about-photos">
-                {% if about and about.photos.all %}
-                    {% for photo in about.photos.all %}
+                {% if has_photos %}
+                    {% for photo in about_photos %}
                         <div class="about-photo">
                             <img src="{{ photo.image.url }}" alt="{{ photo.caption|default:'Foto del salon' }}" />
                         </div>
                     {% endfor %}
                 {% else %}
-                    <div class="about-photo" aria-label="Foto del salon"></div>
-                    <div class="about-photo" aria-label="Foto del equipo"></div>
-                    <div class="about-photo" aria-label="Foto del espacio de trabajo"></div>
-                    <div class="about-photo" aria-label="Foto de resultados"></div>
+                    <div class="about-photo" aria-hidden="true"></div>
+                    <div class="about-photo" aria-hidden="true"></div>
+                    <div class="about-photo" aria-hidden="true"></div>
+                    <div class="about-photo" aria-hidden="true"></div>
                 {% endif %}
             </div>
             <p>

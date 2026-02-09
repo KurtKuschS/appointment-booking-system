@@ -6,16 +6,16 @@
     <section class="hero">
         <div class="hero-grid">
             <div>
-                <h2 class="hero-title">Salon Lash</h2>
+                <h1 class="hero-title">Salon Lash</h1>
                 <p class="hero-tagline">Miradas suaves, pestanas impecables. Tu momento de belleza empieza aqui.</p>
                 <a class="hero-cta" href="{% url 'booking_create' %}">Agendar hora</a>
             </div>
-            <div class="hero-image" aria-label="Trabajo de extensiones de pestanas"></div>
+            <div class="hero-image" role="img" aria-label="Trabajo de extensiones de pestanas"></div>
         </div>
     </section>
 
     <section>
-        <h3 class="section-title">Servicios destacados</h3>
+        <h2 class="section-title">Servicios destacados</h2>
         <p class="section-subtitle">Tecnicas suaves y resultados consistentes, pensadas para tu rutina.</p>
         {% if services %}
             <div class="service-grid">

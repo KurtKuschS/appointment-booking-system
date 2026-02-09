@@ -3,9 +3,9 @@
 {% block title %}Galeria{% endblock %}
 
 {% block content %}
-    <h2 class="section-title">{{ gallery.title|default:"Galeria de trabajos" }}</h2>
+    <h1 class="section-title">{{ gallery.title|default:"Galeria de trabajos" }}</h1>
     {% if gallery and gallery.subtitle %}
-        <p>{{ gallery.subtitle }}</p>
+        <p>{{ gallery.subtitle|linebreaksbr }}</p>
     {% endif %}
 
     {% if user.is_staff %}
@@ -13,8 +13,8 @@
     {% endif %}
 
     <div class="gallery-grid">
-        {% if gallery and gallery.photos.all %}
-            {% for item in gallery.photos.all %}
+        {% if has_gallery_photos %}
+            {% for item in gallery_photos %}
                 <div class="card">
                     <div class="gallery-pair">
                         {% if item.before_image %}
@@ -31,7 +31,7 @@
                         {% endif %}
                     </div>
                     {% if item.caption %}
-                        <p>{{ item.caption }}</p>
+                        <p>{{ item.caption|linebreaksbr }}</p>
                     {% endif %}
                 </div>
             {% endfor %}

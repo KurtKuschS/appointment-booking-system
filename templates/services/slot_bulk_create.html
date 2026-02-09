@@ -3,7 +3,7 @@
 {% block title %}Crear horarios{% endblock %}
 
 {% block content %}
-    <h2 class="section-title">Crear horarios masivo</h2>
+    <h1 class="section-title">Crear horarios masivo</h1>
     <div class="service-meta">
         <a class="btn btn--ghost" href="{% url 'slot_list' %}">Gestionar horarios</a>
         <a class="btn btn--ghost" href="{% url 'slot_create' %}">Crear horario individual</a>
@@ -14,37 +14,37 @@
         {{ form.non_field_errors }}
 
         <div class="card">
-            <label>{{ form.start_date.label }}</label><br />
+            <label for="{{ form.start_date.id_for_label }}">{{ form.start_date.label }}</label><br />
             {{ form.start_date }}
             {{ form.start_date.errors }}
         </div>
 
         <div class="card">
-            <label>{{ form.end_date.label }}</label><br />
+            <label for="{{ form.end_date.id_for_label }}">{{ form.end_date.label }}</label><br />
             {{ form.end_date }}
             {{ form.end_date.errors }}
         </div>
 
         <div class="card">
-            <label>{{ form.start_time.label }}</label><br />
+            <label for="{{ form.start_time.id_for_label }}">{{ form.start_time.label }}</label><br />
             {{ form.start_time }}
             {{ form.start_time.errors }}
         </div>
 
         <div class="card">
-            <label>{{ form.end_time.label }}</label><br />
+            <label for="{{ form.end_time.id_for_label }}">{{ form.end_time.label }}</label><br />
             {{ form.end_time }}
             {{ form.end_time.errors }}
         </div>
 
         <div class="card">
-            <label>{{ form.slot_minutes.label }}</label><br />
+            <label for="{{ form.slot_minutes.id_for_label }}">{{ form.slot_minutes.label }}</label><br />
             {{ form.slot_minutes }}
             {{ form.slot_minutes.errors }}
         </div>
 
         <div class="card">
-            <label>{{ form.weekdays.label }}</label><br />
+            <label for="{{ form.weekdays.id_for_label }}">{{ form.weekdays.label }}</label><br />
             {{ form.weekdays }}
             {{ form.weekdays.errors }}
         </div>

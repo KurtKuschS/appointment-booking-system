@@ -3,7 +3,7 @@
 {% block title %}Servicios{% endblock %}
 
 {% block content %}
-    <h2 class="section-title">Servicios disponibles</h2>
+    <h1 class="section-title">Servicios disponibles</h1>
     {% if user.is_staff %}
         <a class="btn btn--ghost" href="{% url 'service_admin_list' %}">Gestionar servicios</a>
     {% endif %}

@@ -11,4 +11,10 @@ def home(request):
 
 def about(request):
     about_page = AboutPage.objects.prefetch_related("photos").first()
-    return render(request, "about.html", {"about": about_page})
+    about_photos = list(about_page.photos.all()) if about_page else []
+    context = {
+        "about": about_page,
+        "about_photos": about_photos,
+        "has_photos": bool(about_photos),
+    }
+    return render(request, "about.html", context)
