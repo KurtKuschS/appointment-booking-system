@@ -6,8 +6,8 @@ from django.db.models import Max
 from django.forms import inlineformset_factory
 from django.shortcuts import redirect, render
 
-from .forms import AboutPageForm, AboutPhotoForm, GalleryPageForm, GalleryPhotoForm
-from .models import AboutPage, AboutPhoto, GalleryPage, GalleryPhoto
+from .forms import AboutPageForm, AboutPhotoForm, ContactPageForm, GalleryPageForm, GalleryPhotoForm
+from .models import AboutPage, AboutPhoto, ContactPage, GalleryPage, GalleryPhoto
 
 logger = logging.getLogger(__name__)
 
@@ -98,3 +98,24 @@ def gallery_edit(request):
 
     context = {"page_form": page_form, "formset": formset}
     return render(request, "pages/gallery_edit.html", context)
+
+
+def contact(request):
+    page = ContactPage.objects.first()
+    return render(request, "contact.html", {"contact": page})
+
+
+@user_passes_test(_is_staff)
+def contact_edit(request):
+    contact_page, _ = ContactPage.objects.get_or_create(id=1)
+
+    if request.method == "POST":
+        form = ContactPageForm(request.POST, instance=contact_page)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Contacto actualizado.")
+            return redirect("contact")
+    else:
+        form = ContactPageForm(instance=contact_page)
+
+    return render(request, "pages/contact_edit.html", {"form": form})

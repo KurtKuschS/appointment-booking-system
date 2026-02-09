@@ -6,4 +6,6 @@ urlpatterns = [
     path("about/edit/", views.about_edit, name="about_edit"),
     path("gallery/", views.gallery, name="gallery"),
     path("gallery/edit/", views.gallery_edit, name="gallery_edit"),
+    path("contact/", views.contact, name="contact"),
+    path("contact/edit/", views.contact_edit, name="contact_edit"),
 ]

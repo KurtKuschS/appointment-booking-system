@@ -46,3 +46,17 @@ class GalleryPhoto(models.Model):
 
     def __str__(self) -> str:
         return f"Trabajo {self.order}"
+
+
+class ContactPage(models.Model):
+    title = models.CharField(max_length=120, default="Contacto")
+    address = models.TextField(blank=True)
+    schedule = models.TextField(blank=True)
+    phone = models.CharField(max_length=30, blank=True)
+    whatsapp = models.CharField(max_length=30, blank=True)
+    email = models.EmailField(blank=True)
+    map_embed_url = models.URLField(blank=True, max_length=500)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self) -> str:
+        return self.title

@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}Editar contacto{% endblock %}
+
+{% block content %}
+    <h2>Editar contacto</h2>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <div class="card">
+            <label>Titulo</label><br />
+            {{ form.title }}
+            {{ form.title.errors }}
+        </div>
+
+        <div class="card">
+            <label>Direccion</label><br />
+            {{ form.address }}
+            {{ form.address.errors }}
+        </div>
+
+        <div class="card">
+            <label>Horario</label><br />
+            {{ form.schedule }}
+            {{ form.schedule.errors }}
+        </div>
+
+        <div class="card">
+            <label>Telefono</label><br />
+            {{ form.phone }}
+            {{ form.phone.errors }}
+        </div>
+
+        <div class="card">
+            <label>WhatsApp</label><br />
+            {{ form.whatsapp }}
+            {{ form.whatsapp.errors }}
+        </div>
+
+        <div class="card">
+            <label>Email</label><br />
+            {{ form.email }}
+            {{ form.email.errors }}
+        </div>
+
+        <div class="card">
+            <label>Google Maps embed URL</label><br />
+            {{ form.map_embed_url }}
+            {{ form.map_embed_url.errors }}
+            <small>Pega el enlace del iframe de Google Maps (src).</small>
+        </div>
+
+        <button type="submit">Guardar cambios</button>
+    </form>
+{% endblock %}

@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import AboutPage, AboutPhoto, GalleryPage, GalleryPhoto
+from .models import AboutPage, AboutPhoto, ContactPage, GalleryPage, GalleryPhoto
 
 
 class AboutPhotoInline(admin.TabularInline):
@@ -23,3 +23,8 @@ class GalleryPhotoInline(admin.TabularInline):
 class GalleryPageAdmin(admin.ModelAdmin):
     list_display = ("title", "updated_at")
     inlines = [GalleryPhotoInline]
+
+
+@admin.register(ContactPage)
+class ContactPageAdmin(admin.ModelAdmin):
+    list_display = ("title", "updated_at")

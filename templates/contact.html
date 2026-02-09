@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}Contacto{% endblock %}
+
+{% block content %}
+    <h2>{{ contact.title|default:"Contacto" }}</h2>
+
+    {% if user.is_staff %}
+        <a class="hero-cta" href="{% url 'contact_edit' %}">Editar contacto</a>
+    {% endif %}
+
+    <div class="contact-grid">
+        <div class="card">
+            <h3>Direccion</h3>
+            <p>{{ contact.address|default:"" }}</p>
+
+            <h3>Horario</h3>
+            <p>{{ contact.schedule|default:"" }}</p>
+
+            <h3>Telefono</h3>
+            <p>{{ contact.phone|default:"" }}</p>
+
+            <div class="contact-actions">
+                {% if contact.whatsapp %}
+                    <a href="https://wa.me/{{ contact.whatsapp|cut:"+"|cut:" "|cut:"-" }}" target="_blank" rel="noopener">WhatsApp</a>
+                {% endif %}
+                {% if contact.phone %}
+                    <a href="tel:{{ contact.phone|cut:" " }}">Llamar</a>
+                {% endif %}
+                {% if contact.email %}
+                    <a href="mailto:{{ contact.email }}">Email</a>
+                {% endif %}
+            </div>
+
+            <p>
+                <strong>Correo:</strong>
+                {{ contact.email|default:"" }}
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>Ubicacion</h3>
+            {% if contact.map_embed_url %}
+                <iframe
+                    class="contact-map"
+                    src="{{ contact.map_embed_url }}"
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"
+                ></iframe>
+            {% else %}
+                <p>Agrega el enlace embed de Google Maps.</p>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
