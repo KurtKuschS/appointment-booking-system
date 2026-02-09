@@ -6,8 +6,15 @@ from django.db.models import Max
 from django.forms import inlineformset_factory
 from django.shortcuts import redirect, render
 
-from .forms import AboutPageForm, AboutPhotoForm, ContactPageForm, GalleryPageForm, GalleryPhotoForm
-from .models import AboutPage, AboutPhoto, ContactPage, GalleryPage, GalleryPhoto
+from .forms import (
+    AboutPageForm,
+    AboutPhotoForm,
+    ContactPageForm,
+    GalleryPageForm,
+    GalleryPhotoForm,
+    PolicyPageForm,
+)
+from .models import AboutPage, AboutPhoto, ContactPage, GalleryPage, GalleryPhoto, PolicyPage
 
 logger = logging.getLogger(__name__)
 
@@ -119,3 +126,24 @@ def contact_edit(request):
         form = ContactPageForm(instance=contact_page)
 
     return render(request, "pages/contact_edit.html", {"form": form})
+
+
+def policy(request):
+    page = PolicyPage.objects.first()
+    return render(request, "policy.html", {"policy": page})
+
+
+@user_passes_test(_is_staff)
+def policy_edit(request):
+    policy_page, _ = PolicyPage.objects.get_or_create(id=1)
+
+    if request.method == "POST":
+        form = PolicyPageForm(request.POST, instance=policy_page)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Politicas actualizadas.")
+            return redirect("policy")
+    else:
+        form = PolicyPageForm(instance=policy_page)
+
+    return render(request, "pages/policy_edit.html", {"form": form})

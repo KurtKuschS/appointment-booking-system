@@ -60,3 +60,14 @@ class ContactPage(models.Model):
 
     def __str__(self) -> str:
         return self.title
+
+
+class PolicyPage(models.Model):
+    title = models.CharField(max_length=120, default="Politicas del salon")
+    cancellation = models.TextField(blank=True)
+    lateness = models.TextField(blank=True)
+    before_after = models.TextField(blank=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self) -> str:
+        return self.title

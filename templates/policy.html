@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}Politicas{% endblock %}
+
+{% block content %}
+    <h2>{{ policy.title|default:"Politicas del salon" }}</h2>
+
+    {% if user.is_staff %}
+        <a class="hero-cta" href="{% url 'policy_edit' %}">Editar politicas</a>
+    {% endif %}
+
+    <div class="card policy-section">
+        <h3>Politicas de cancelacion</h3>
+        <p>{{ policy.cancellation|default:"" }}</p>
+    </div>
+
+    <div class="card policy-section">
+        <h3>Politicas de atraso</h3>
+        <p>{{ policy.lateness|default:"" }}</p>
+    </div>
+
+    <div class="card policy-section">
+        <h3>Antes y despues del servicio</h3>
+        <p>{{ policy.before_after|default:"" }}</p>
+    </div>
+{% endblock %}

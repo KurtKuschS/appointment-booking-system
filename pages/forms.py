@@ -2,7 +2,7 @@ import re
 
 from django import forms
 
-from .models import AboutPage, AboutPhoto, ContactPage, GalleryPage, GalleryPhoto
+from .models import AboutPage, AboutPhoto, ContactPage, GalleryPage, GalleryPhoto, PolicyPage
 
 
 class AboutPageForm(forms.ModelForm):
@@ -101,3 +101,19 @@ class ContactPageForm(forms.ModelForm):
             return match.group(1)
 
         return value
+
+
+class PolicyPageForm(forms.ModelForm):
+    class Meta:
+        model = PolicyPage
+        fields = ("title", "cancellation", "lateness", "before_after")
+        widgets = {
+            "cancellation": forms.Textarea(attrs={"rows": 4}),
+            "lateness": forms.Textarea(attrs={"rows": 4}),
+            "before_after": forms.Textarea(attrs={"rows": 4}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field_name in self.fields:
+            self.fields[field_name].widget.attrs.update({"class": "input"})
