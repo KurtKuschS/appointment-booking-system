@@ -5,39 +5,46 @@
 {% block content %}
     <h1 class="section-title">{{ title }}</h1>
 
-    <form method="post" class="form-card">
+    <form method="post" class="form-panel">
         {% csrf_token %}
+        {{ form.non_field_errors }}
 
-        <div class="card">
-            <label for="{{ form.name.id_for_label }}">Nombre</label><br />
-            {{ form.name }}
-            {{ form.name.errors }}
+        <div class="form-grid">
+            <div class="form-row">
+                <label for="{{ form.name.id_for_label }}">Nombre</label>
+                {{ form.name }}
+                {{ form.name.errors }}
+            </div>
+
+            <div class="form-row">
+                <label for="{{ form.description.id_for_label }}">Descripcion</label>
+                {{ form.description }}
+                {{ form.description.errors }}
+            </div>
+
+            <div class="form-row form-row--two">
+                <div>
+                    <label for="{{ form.duration_minutes.id_for_label }}">Duracion (min)</label>
+                    {{ form.duration_minutes }}
+                    {{ form.duration_minutes.errors }}
+                </div>
+                <div>
+                    <label for="{{ form.price.id_for_label }}">Precio</label>
+                    {{ form.price }}
+                    {{ form.price.errors }}
+                </div>
+            </div>
+
+            <div class="form-row">
+                <label for="{{ form.is_active.id_for_label }}">Activo</label>
+                {{ form.is_active }}
+                {{ form.is_active.errors }}
+            </div>
         </div>
 
-        <div class="card">
-            <label for="{{ form.description.id_for_label }}">Descripcion</label><br />
-            {{ form.description }}
-            {{ form.description.errors }}
+        <div class="form-actions">
+            <button type="submit" class="btn">Guardar</button>
+            <a class="btn btn--ghost" href="{% url 'service_admin_list' %}">Cancelar</a>
         </div>
-
-        <div class="card">
-            <label for="{{ form.duration_minutes.id_for_label }}">Duracion (min)</label><br />
-            {{ form.duration_minutes }}
-            {{ form.duration_minutes.errors }}
-        </div>
-
-        <div class="card">
-            <label for="{{ form.price.id_for_label }}">Precio</label><br />
-            {{ form.price }}
-            {{ form.price.errors }}
-        </div>
-
-        <div class="card">
-            <label for="{{ form.is_active.id_for_label }}">Activo</label><br />
-            {{ form.is_active }}
-            {{ form.is_active.errors }}
-        </div>
-
-        <button type="submit">Guardar</button>
     </form>
 {% endblock %}

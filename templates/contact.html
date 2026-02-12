@@ -39,9 +39,16 @@
                     src="{{ contact.map_embed_url }}"
                     loading="lazy"
                     referrerpolicy="no-referrer-when-downgrade"
-                    sandbox="allow-scripts allow-same-origin allow-popups"
+                    allowfullscreen
                     title="Mapa de ubicacion"
                 ></iframe>
+                <p class="contact-actions">
+                    {% if contact.address %}
+                        <a href="https://maps.app.goo.gl/mb5yna7Y1foNsRt4A" target="_blank" rel="noopener">Abrir mapa completo</a>
+                    {% else %}
+                        <a href="https://maps.app.goo.gl/mb5yna7Y1foNsRt4A" target="_blank" rel="noopener">Abrir mapa completo</a>
+                    {% endif %}
+                </p>
             {% else %}
                 <p>Agrega el enlace embed de Google Maps.</p>
             {% endif %}

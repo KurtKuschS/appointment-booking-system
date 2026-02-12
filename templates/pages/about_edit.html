@@ -5,68 +5,81 @@
 {% block content %}
     <h1 class="section-title">Editar sobre el salon</h1>
 
-    <form method="post" enctype="multipart/form-data">
+    <form method="post" enctype="multipart/form-data" class="form-panel">
         {% csrf_token %}
 
         {{ page_form.non_field_errors }}
         {{ formset.non_form_errors }}
 
-        <div class="card">
-            <label for="{{ page_form.title.id_for_label }}">Titulo</label><br />
-            {{ page_form.title }}
-            {{ page_form.title.errors }}
+        <div class="form-grid">
+            <div class="form-row">
+                <label for="{{ page_form.title.id_for_label }}">Titulo</label>
+                {{ page_form.title }}
+                {{ page_form.title.errors }}
+            </div>
+
+            <div class="form-row">
+                <label for="{{ page_form.story.id_for_label }}">Historia</label>
+                {{ page_form.story }}
+                {{ page_form.story.errors }}
+            </div>
+
+            <div class="form-row">
+                <label for="{{ page_form.experience.id_for_label }}">Experiencia y especializaciones</label>
+                {{ page_form.experience }}
+                {{ page_form.experience.errors }}
+            </div>
+
+            <div class="form-row">
+                <label for="{{ page_form.certifications.id_for_label }}">Certificaciones</label>
+                {{ page_form.certifications }}
+                {{ page_form.certifications.errors }}
+            </div>
         </div>
 
-        <div class="card">
-            <label for="{{ page_form.story.id_for_label }}">Historia</label><br />
-            {{ page_form.story }}
-            {{ page_form.story.errors }}
-        </div>
-
-        <div class="card">
-            <label for="{{ page_form.experience.id_for_label }}">Experiencia y especializaciones</label><br />
-            {{ page_form.experience }}
-            {{ page_form.experience.errors }}
-        </div>
-
-        <div class="card">
-            <label for="{{ page_form.certifications.id_for_label }}">Certificaciones</label><br />
-            {{ page_form.certifications }}
-            {{ page_form.certifications.errors }}
-        </div>
-
-        <div class="card">
-            <h3>Fotos</h3>
+        <div class="form-section">
+            <h2 class="form-section-title">Fotos</h2>
             {{ formset.management_form }}
-            {% for form in formset %}
-                <div class="card">
-                    {% for hidden in form.hidden_fields %}
-                        {{ hidden }}
-                    {% endfor %}
-                    {% if form.instance and form.instance.image %}
-                        <div class="about-photo">
-                            <img src="{{ form.instance.image.url }}" alt="{{ form.instance.caption|default:'Foto del salon' }}" />
+            <div class="form-grid">
+                {% for form in formset %}
+                    <div class="form-panel form-panel--nested">
+                        {% for hidden in form.hidden_fields %}
+                            {{ hidden }}
+                        {% endfor %}
+                        {% if form.instance and form.instance.image %}
+                            <div class="about-photo">
+                                <img src="{{ form.instance.image.url }}" alt="{{ form.instance.caption|default:'Foto del salon' }}" />
+                            </div>
+                        {% endif %}
+                        <div class="form-row">
+                            <label for="{{ form.image.id_for_label }}">Imagen</label>
+                            {{ form.image }}
+                            {{ form.image.errors }}
                         </div>
-                    {% endif %}
-                    <label for="{{ form.image.id_for_label }}">Imagen</label><br />
-                    {{ form.image }}
-                    {{ form.image.errors }}
 
-                    <label for="{{ form.caption.id_for_label }}">Descripcion</label><br />
-                    {{ form.caption }}
-                    {{ form.caption.errors }}
+                        <div class="form-row">
+                            <label for="{{ form.caption.id_for_label }}">Descripcion</label>
+                            {{ form.caption }}
+                            {{ form.caption.errors }}
+                        </div>
 
-                    <label for="{{ form.order.id_for_label }}">Orden</label><br />
-                    {{ form.order }}
-                    {{ form.order.errors }}
+                        <div class="form-row">
+                            <label for="{{ form.order.id_for_label }}">Orden</label>
+                            {{ form.order }}
+                            {{ form.order.errors }}
+                        </div>
 
-                    {% if form.DELETE %}
-                        <label for="{{ form.DELETE.id_for_label }}">{{ form.DELETE }} Eliminar</label>
-                    {% endif %}
-                </div>
-            {% endfor %}
+                        {% if form.DELETE %}
+                            <label for="{{ form.DELETE.id_for_label }}">{{ form.DELETE }} Eliminar</label>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
         </div>
 
-        <button type="submit">Guardar cambios</button>
+        <div class="form-actions">
+            <button type="submit" class="btn">Guardar cambios</button>
+            <a class="btn btn--ghost" href="{% url 'about' %}">Cancelar</a>
+        </div>
     </form>
 {% endblock %}

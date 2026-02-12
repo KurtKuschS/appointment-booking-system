@@ -101,6 +101,13 @@
 
 main {
     padding: 20px 16px 40px;
+    display: grid;
+    gap: 22px;
+}
+
+main > section {
+    display: grid;
+    gap: 16px;
 }
 
 @media (max-width: 768px) {

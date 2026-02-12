@@ -5,67 +5,82 @@
 {% block content %}
     <h1 class="section-title">Editar galeria</h1>
 
-    <form method="post" enctype="multipart/form-data">
+    <form method="post" enctype="multipart/form-data" class="form-panel">
         {% csrf_token %}
 
         {{ page_form.non_field_errors }}
         {{ formset.non_form_errors }}
 
-        <div class="card">
-            <label for="{{ page_form.title.id_for_label }}">Titulo</label><br />
-            {{ page_form.title }}
-            {{ page_form.title.errors }}
+        <div class="form-grid">
+            <div class="form-row">
+                <label for="{{ page_form.title.id_for_label }}">Titulo</label>
+                {{ page_form.title }}
+                {{ page_form.title.errors }}
+            </div>
+
+            <div class="form-row">
+                <label for="{{ page_form.subtitle.id_for_label }}">Subtitulo</label>
+                {{ page_form.subtitle }}
+                {{ page_form.subtitle.errors }}
+            </div>
         </div>
 
-        <div class="card">
-            <label for="{{ page_form.subtitle.id_for_label }}">Subtitulo</label><br />
-            {{ page_form.subtitle }}
-            {{ page_form.subtitle.errors }}
-        </div>
-
-        <div class="card">
-            <h3>Fotos</h3>
+        <div class="form-section">
+            <h2 class="form-section-title">Fotos</h2>
             {{ formset.management_form }}
-            {% for form in formset %}
-                <div class="card">
-                    {% for hidden in form.hidden_fields %}
-                        {{ hidden }}
-                    {% endfor %}
-                    {{ form.non_field_errors }}
-                    {% if form.instance and form.instance.before_image %}
-                        <div class="about-photo">
-                            <img src="{{ form.instance.before_image.url }}" alt="Antes" />
+            <div class="form-grid">
+                {% for form in formset %}
+                    <div class="form-panel form-panel--nested">
+                        {% for hidden in form.hidden_fields %}
+                            {{ hidden }}
+                        {% endfor %}
+                        {{ form.non_field_errors }}
+                        {% if form.instance and form.instance.before_image %}
+                            <div class="about-photo">
+                                <img src="{{ form.instance.before_image.url }}" alt="Antes" />
+                            </div>
+                        {% endif %}
+                        {% if form.instance and form.instance.after_image %}
+                            <div class="about-photo">
+                                <img src="{{ form.instance.after_image.url }}" alt="Despues" />
+                            </div>
+                        {% endif %}
+
+                        <div class="form-row">
+                            <label for="{{ form.before_image.id_for_label }}">Antes</label>
+                            {{ form.before_image }}
+                            {{ form.before_image.errors }}
                         </div>
-                    {% endif %}
-                    {% if form.instance and form.instance.after_image %}
-                        <div class="about-photo">
-                            <img src="{{ form.instance.after_image.url }}" alt="Despues" />
+
+                        <div class="form-row">
+                            <label for="{{ form.after_image.id_for_label }}">Despues</label>
+                            {{ form.after_image }}
+                            {{ form.after_image.errors }}
                         </div>
-                    {% endif %}
 
-                    <label for="{{ form.before_image.id_for_label }}">Antes</label><br />
-                    {{ form.before_image }}
-                    {{ form.before_image.errors }}
+                        <div class="form-row">
+                            <label for="{{ form.caption.id_for_label }}">Descripcion</label>
+                            {{ form.caption }}
+                            {{ form.caption.errors }}
+                        </div>
 
-                    <label for="{{ form.after_image.id_for_label }}">Despues</label><br />
-                    {{ form.after_image }}
-                    {{ form.after_image.errors }}
+                        <div class="form-row">
+                            <label for="{{ form.order.id_for_label }}">Orden</label>
+                            {{ form.order }}
+                            {{ form.order.errors }}
+                        </div>
 
-                    <label for="{{ form.caption.id_for_label }}">Descripcion</label><br />
-                    {{ form.caption }}
-                    {{ form.caption.errors }}
-
-                    <label for="{{ form.order.id_for_label }}">Orden</label><br />
-                    {{ form.order }}
-                    {{ form.order.errors }}
-
-                    {% if form.DELETE %}
-                        <label for="{{ form.DELETE.id_for_label }}">{{ form.DELETE }} Eliminar</label>
-                    {% endif %}
-                </div>
-            {% endfor %}
+                        {% if form.DELETE %}
+                            <label for="{{ form.DELETE.id_for_label }}">{{ form.DELETE }} Eliminar</label>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
         </div>
 
-        <button type="submit">Guardar cambios</button>
+        <div class="form-actions">
+            <button type="submit" class="btn">Guardar cambios</button>
+            <a class="btn btn--ghost" href="{% url 'gallery' %}">Cancelar</a>
+        </div>
     </form>
 {% endblock %}

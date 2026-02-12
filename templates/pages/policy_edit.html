@@ -5,35 +5,40 @@
 {% block content %}
     <h1 class="section-title">Editar politicas</h1>
 
-    <form method="post">
+    <form method="post" class="form-panel">
         {% csrf_token %}
 
         {{ form.non_field_errors }}
 
-        <div class="card">
-            <label for="{{ form.title.id_for_label }}">Titulo</label><br />
-            {{ form.title }}
-            {{ form.title.errors }}
+        <div class="form-grid">
+            <div class="form-row">
+                <label for="{{ form.title.id_for_label }}">Titulo</label>
+                {{ form.title }}
+                {{ form.title.errors }}
+            </div>
+
+            <div class="form-row">
+                <label for="{{ form.cancellation.id_for_label }}">Politicas de cancelacion</label>
+                {{ form.cancellation }}
+                {{ form.cancellation.errors }}
+            </div>
+
+            <div class="form-row">
+                <label for="{{ form.lateness.id_for_label }}">Politicas de atraso</label>
+                {{ form.lateness }}
+                {{ form.lateness.errors }}
+            </div>
+
+            <div class="form-row">
+                <label for="{{ form.before_after.id_for_label }}">Reglas antes y despues</label>
+                {{ form.before_after }}
+                {{ form.before_after.errors }}
+            </div>
         </div>
 
-        <div class="card">
-            <label for="{{ form.cancellation.id_for_label }}">Politicas de cancelacion</label><br />
-            {{ form.cancellation }}
-            {{ form.cancellation.errors }}
+        <div class="form-actions">
+            <button type="submit" class="btn">Guardar cambios</button>
+            <a class="btn btn--ghost" href="{% url 'policy' %}">Cancelar</a>
         </div>
-
-        <div class="card">
-            <label for="{{ form.lateness.id_for_label }}">Politicas de atraso</label><br />
-            {{ form.lateness }}
-            {{ form.lateness.errors }}
-        </div>
-
-        <div class="card">
-            <label for="{{ form.before_after.id_for_label }}">Reglas antes y despues</label><br />
-            {{ form.before_after }}
-            {{ form.before_after.errors }}
-        </div>
-
-        <button type="submit">Guardar cambios</button>
     </form>
 {% endblock %}

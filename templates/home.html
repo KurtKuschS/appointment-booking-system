@@ -8,9 +8,36 @@
             <div>
                 <h1 class="hero-title">Salon Lash</h1>
                 <p class="hero-tagline">Miradas suaves, pestanas impecables. Tu momento de belleza empieza aqui.</p>
-                <a class="hero-cta" href="{% url 'booking_create' %}">Agendar hora</a>
+                <div class="hero-actions">
+                    <a class="hero-cta" href="{% url 'booking_create' %}">Agendar hora</a>
+                    <a class="btn btn--ghost" href="{% url 'service_list' %}">Ver servicios</a>
+                </div>
+                <div class="hero-pills">
+                    <span class="hero-pill">Reservas 24/7</span>
+                    <span class="hero-pill">Recordatorios automaticos</span>
+                    <span class="hero-pill">Tecnicas seguras</span>
+                </div>
             </div>
             <div class="hero-image" role="img" aria-label="Trabajo de extensiones de pestanas"></div>
+        </div>
+    </section>
+
+    <section class="trust-strip">
+        <div class="trust-card">
+            <div class="stat-value">+500</div>
+            <div class="stat-label">Reservas atendidas</div>
+        </div>
+        <div class="trust-card">
+            <div class="stat-value">4.9/5</div>
+            <div class="stat-label">Valoracion promedio</div>
+        </div>
+        <div class="trust-card">
+            <div class="stat-value">45 min</div>
+            <div class="stat-label">Tiempo promedio</div>
+        </div>
+        <div class="trust-card">
+            <div class="stat-value">24h</div>
+            <div class="stat-label">Reprogramacion simple</div>
         </div>
     </section>
 
@@ -36,5 +63,110 @@
         {% else %}
             <p>No hay servicios activos.</p>
         {% endif %}
+    </section>
+
+    <section>
+        <h2 class="section-title">Reserva en 3 pasos</h2>
+        <p class="section-subtitle">Agendar es simple y rapido. Tu tiempo siempre controlado.</p>
+        <div class="home-grid-3">
+            <div class="step-card">
+                <div class="step-number">1</div>
+                <strong>Elige tu servicio</strong>
+                <span class="text-muted">Extensiones, lifting o cuidado especializado.</span>
+            </div>
+            <div class="step-card">
+                <div class="step-number">2</div>
+                <strong>Selecciona fecha</strong>
+                <span class="text-muted">Mira horarios reales y elige tu momento ideal.</span>
+            </div>
+            <div class="step-card">
+                <div class="step-number">3</div>
+                <strong>Confirma tu cita</strong>
+                <span class="text-muted">Recibe confirmacion y recordatorio automatico.</span>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2 class="section-title">Por que nos eligen</h2>
+        <p class="section-subtitle">Detalles que cuidan la experiencia completa.</p>
+        <div class="home-grid-3">
+            <div class="highlight-card">
+                <strong>Resultados naturales</strong>
+                <span class="text-muted">Tecnicas personalizadas segun tu rostro y estilo.</span>
+            </div>
+            <div class="highlight-card">
+                <strong>Higiene impecable</strong>
+                <span class="text-muted">Protocolos claros y materiales de alta calidad.</span>
+            </div>
+            <div class="highlight-card">
+                <strong>Transparencia total</strong>
+                <span class="text-muted">Duracion y precios visibles antes de reservar.</span>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2 class="section-title">Opiniones reales</h2>
+        <p class="section-subtitle">Clientes felices y citas sin friccion.</p>
+        <div class="home-grid-3">
+            <div class="quote-card">
+                <p>"Me encanto el resultado. Todo claro desde la reserva y cero esperas."</p>
+                <span class="text-muted">Camila P.</span>
+            </div>
+            <div class="quote-card">
+                <p>"Pude reprogramar sin problema y el recordatorio me salvo."</p>
+                <span class="text-muted">Valeria R.</span>
+            </div>
+            <div class="quote-card">
+                <p>"Servicio impecable, se nota el cuidado en cada detalle."</p>
+                <span class="text-muted">Daniela M.</span>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2 class="section-title">Preguntas frecuentes</h2>
+        <p class="section-subtitle">Resuelve dudas antes de reservar.</p>
+        <div class="home-faq">
+            <details class="faq-item">
+                <summary>Cuanto dura una cita?</summary>
+                <p>Depende del servicio, pero siempre veras la duracion exacta antes de confirmar.</p>
+            </details>
+            <details class="faq-item">
+                <summary>Puedo reprogramar mi hora?</summary>
+                <p>Si. Puedes reprogramar con antelacion desde tu perfil o escribiendonos.</p>
+            </details>
+            <details class="faq-item">
+                <summary>Que necesito antes de asistir?</summary>
+                <p>Llega sin maquillaje en los ojos para lograr un resultado mas limpio y duradero.</p>
+            </details>
+        </div>
+    </section>
+
+    <section class="cta-banner">
+        <div>
+            <h2>Lista para tu proxima cita?</h2>
+            <p class="text-muted">Agenda en minutos y recibe confirmacion inmediata.</p>
+        </div>
+        <a class="hero-cta" href="{% url 'booking_create' %}">Reservar ahora</a>
+    </section>
+
+    <section>
+        <h2 class="section-title">Explora mas</h2>
+        <div class="home-grid-3">
+            <a class="link-card" href="{% url 'about' %}">
+                <strong>Sobre el salon</strong>
+                <span class="text-muted">Conoce el equipo y nuestra filosofia.</span>
+            </a>
+            <a class="link-card" href="{% url 'gallery' %}">
+                <strong>Galeria</strong>
+                <span class="text-muted">Antes y despues de trabajos reales.</span>
+            </a>
+            <a class="link-card" href="{% url 'contact' %}">
+                <strong>Contacto</strong>
+                <span class="text-muted">Direccion, horarios y ayuda rapida.</span>
+            </a>
+        </div>
     </section>
 {% endblock %}

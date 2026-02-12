@@ -3,27 +3,32 @@
 {% block title %}Gestionar horarios{% endblock %}
 
 {% block content %}
-    <h1 class="section-title">Gestionar horarios</h1>
-    <div class="service-meta">
-        <a class="btn" href="{% url 'slot_create' %}">Crear horario</a>
-        <a class="btn btn--ghost" href="{% url 'slot_bulk_create' %}">Carga masiva</a>
-        <a class="btn btn--ghost" href="{% url 'slot_delete_unreserved' %}">Eliminar no reservados</a>
+    <div class="page-header">
+        <div>
+            <h1 class="section-title">Gestionar horarios</h1>
+            <p class="section-subtitle">Crea y organiza la disponibilidad del salon.</p>
+        </div>
+        <div class="page-actions">
+            <a class="btn" href="{% url 'slot_create' %}">Crear horario</a>
+            <a class="btn btn--ghost" href="{% url 'slot_bulk_create' %}">Carga masiva</a>
+            <a class="btn btn--ghost" href="{% url 'slot_delete_unreserved' %}">Eliminar no reservados</a>
+        </div>
     </div>
 
-    <form method="get" class="form-card">
-        <div class="card">
-            <label for="filter-date">Filtrar por fecha</label><br />
+    <form method="get" class="filter-bar">
+        <div class="form-row">
+            <label for="filter-date">Filtrar por fecha</label>
             <input class="input" type="date" id="filter-date" name="date" value="{{ date_filter }}" />
         </div>
-        <div class="card">
-            <label for="filter-active">Estado</label><br />
+        <div class="form-row">
+            <label for="filter-active">Estado</label>
             <select class="input" id="filter-active" name="active">
                 <option value="">Todos</option>
                 <option value="1" {% if active_filter == "1" %}selected{% endif %}>Activos</option>
                 <option value="0" {% if active_filter == "0" %}selected{% endif %}>Inactivos</option>
             </select>
         </div>
-        <button type="submit">Filtrar</button>
+        <button type="submit" class="btn btn--ghost">Filtrar</button>
     </form>
 
     {% if slots %}
@@ -43,7 +48,7 @@
                             <span class="badge badge--cancelled">Cancelada</span>
                         {% endif %}
                     </div>
-                    <div class="service-meta">
+                    <div class="card-actions">
                         <a class="btn btn--ghost" href="{% url 'slot_update' slot.id %}">Editar</a>
                         <a class="btn btn--ghost" href="{% url 'slot_delete' slot.id %}">Eliminar</a>
                     </div>

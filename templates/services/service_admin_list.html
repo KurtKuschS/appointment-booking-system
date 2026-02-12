@@ -3,8 +3,15 @@
 {% block title %}Gestionar servicios{% endblock %}
 
 {% block content %}
-    <h1 class="section-title">Gestionar servicios</h1>
-    <a class="btn" href="{% url 'service_create' %}">Crear servicio</a>
+    <div class="page-header">
+        <div>
+            <h1 class="section-title">Gestionar servicios</h1>
+            <p class="section-subtitle">Administra precios, duracion y disponibilidad.</p>
+        </div>
+        <div class="page-actions">
+            <a class="btn" href="{% url 'service_create' %}">Crear servicio</a>
+        </div>
+    </div>
 
     {% if services %}
         <div class="service-grid">
@@ -21,7 +28,7 @@
                             <span class="badge">Inactivo</span>
                         {% endif %}
                     </div>
-                    <div class="service-meta">
+                    <div class="card-actions">
                         <a class="btn btn--ghost" href="{% url 'service_update' service.id %}">Editar</a>
                         <a class="btn btn--ghost" href="{% url 'service_delete' service.id %}">Eliminar</a>
                     </div>

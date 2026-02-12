@@ -5,33 +5,40 @@
 {% block content %}
     <h1 class="section-title">{{ title }}</h1>
 
-    <form method="post" class="form-card">
+    <form method="post" class="form-panel">
         {% csrf_token %}
+        {{ form.non_field_errors }}
 
-        <div class="card">
-            <label for="{{ form.date.id_for_label }}">Fecha</label><br />
-            {{ form.date }}
-            {{ form.date.errors }}
+        <div class="form-grid">
+            <div class="form-row">
+                <label for="{{ form.date.id_for_label }}">Fecha</label>
+                {{ form.date }}
+                {{ form.date.errors }}
+            </div>
+
+            <div class="form-row form-row--two">
+                <div>
+                    <label for="{{ form.start_time.id_for_label }}">Hora inicio</label>
+                    {{ form.start_time }}
+                    {{ form.start_time.errors }}
+                </div>
+                <div>
+                    <label for="{{ form.end_time.id_for_label }}">Hora termino</label>
+                    {{ form.end_time }}
+                    {{ form.end_time.errors }}
+                </div>
+            </div>
+
+            <div class="form-row">
+                <label for="{{ form.is_active.id_for_label }}">Activo</label>
+                {{ form.is_active }}
+                {{ form.is_active.errors }}
+            </div>
         </div>
 
-        <div class="card">
-            <label for="{{ form.start_time.id_for_label }}">Hora inicio</label><br />
-            {{ form.start_time }}
-            {{ form.start_time.errors }}
+        <div class="form-actions">
+            <button type="submit" class="btn">Guardar</button>
+            <a class="btn btn--ghost" href="{% url 'slot_list' %}">Cancelar</a>
         </div>
-
-        <div class="card">
-            <label for="{{ form.end_time.id_for_label }}">Hora termino</label><br />
-            {{ form.end_time }}
-            {{ form.end_time.errors }}
-        </div>
-
-        <div class="card">
-            <label for="{{ form.is_active.id_for_label }}">Activo</label><br />
-            {{ form.is_active }}
-            {{ form.is_active.errors }}
-        </div>
-
-        <button type="submit">Guardar</button>
     </form>
 {% endblock %}

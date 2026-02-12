@@ -19,13 +19,29 @@
                     <div class="gallery-pair">
                         {% if item.before_image %}
                             <div class="gallery-photo">
-                                <img src="{{ item.before_image.url }}" alt="Antes" loading="lazy" width="600" height="400" />
+                                <img
+                                    src="{{ item.before_image.url }}"
+                                    alt="Antes"
+                                    loading="lazy"
+                                    width="600"
+                                    height="400"
+                                    class="gallery-zoom"
+                                    data-full="{{ item.before_image.url }}"
+                                />
                                 <span class="gallery-label">Antes</span>
                             </div>
                         {% endif %}
                         {% if item.after_image %}
                             <div class="gallery-photo">
-                                <img src="{{ item.after_image.url }}" alt="Despues" loading="lazy" width="600" height="400" />
+                                <img
+                                    src="{{ item.after_image.url }}"
+                                    alt="Despues"
+                                    loading="lazy"
+                                    width="600"
+                                    height="400"
+                                    class="gallery-zoom"
+                                    data-full="{{ item.after_image.url }}"
+                                />
                                 <span class="gallery-label">Despues</span>
                             </div>
                         {% endif %}
@@ -39,4 +55,52 @@
             <p>No hay fotos aun.</p>
         {% endif %}
     </div>
+
+    <div class="lightbox" id="lightbox" aria-hidden="true">
+        <button class="lightbox-close" type="button" aria-label="Cerrar imagen">×</button>
+        <img class="lightbox-image" alt="Imagen ampliada" />
+    </div>
+
+    <script>
+        (function () {
+            const lightbox = document.getElementById("lightbox");
+            const lightboxImage = lightbox ? lightbox.querySelector(".lightbox-image") : null;
+            const closeBtn = lightbox ? lightbox.querySelector(".lightbox-close") : null;
+
+            if (!lightbox || !lightboxImage || !closeBtn) {
+                return;
+            }
+
+            document.querySelectorAll(".gallery-zoom").forEach((image) => {
+                image.addEventListener("click", function () {
+                    const full = image.getAttribute("data-full");
+                    if (!full) {
+                        return;
+                    }
+                    lightboxImage.src = full;
+                    lightbox.setAttribute("aria-hidden", "false");
+                    lightbox.classList.add("is-open");
+                });
+            });
+
+            function closeLightbox() {
+                lightbox.classList.remove("is-open");
+                lightbox.setAttribute("aria-hidden", "true");
+                lightboxImage.src = "";
+            }
+
+            closeBtn.addEventListener("click", closeLightbox);
+            lightbox.addEventListener("click", function (event) {
+                if (event.target === lightbox) {
+                    closeLightbox();
+                }
+            });
+
+            document.addEventListener("keydown", function (event) {
+                if (event.key === "Escape" && lightbox.classList.contains("is-open")) {
+                    closeLightbox();
+                }
+            });
+        })();
+    </script>
 {% endblock %}
