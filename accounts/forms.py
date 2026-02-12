@@ -23,8 +23,20 @@ class SignupForm(UserCreationForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        autocomplete = {
+            "username": "username",
+            "first_name": "given-name",
+            "last_name": "family-name",
+            "email": "email",
+            "phone": "tel",
+            "password1": "new-password",
+            "password2": "new-password",
+        }
         for field_name in self.fields:
-            self.fields[field_name].widget.attrs.update({"class": "input"})
+            attrs = {"class": "input"}
+            if field_name in autocomplete:
+                attrs["autocomplete"] = autocomplete[field_name]
+            self.fields[field_name].widget.attrs.update(attrs)
 
 
 class UserProfileForm(forms.ModelForm):
@@ -34,8 +46,16 @@ class UserProfileForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        autocomplete = {
+            "first_name": "given-name",
+            "last_name": "family-name",
+            "email": "email",
+        }
         for field_name in self.fields:
-            self.fields[field_name].widget.attrs.update({"class": "input"})
+            attrs = {"class": "input"}
+            if field_name in autocomplete:
+                attrs["autocomplete"] = autocomplete[field_name]
+            self.fields[field_name].widget.attrs.update(attrs)
 
 
 class ClientProfileForm(forms.ModelForm):
@@ -46,5 +66,5 @@ class ClientProfileForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for field_name in self.fields:
-            self.fields[field_name].widget.attrs.update({"class": "input"})
+            self.fields[field_name].widget.attrs.update({"class": "input", "autocomplete": "tel"})
         self.fields["phone"].validators.append(phone_validator)

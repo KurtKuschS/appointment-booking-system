@@ -3,70 +3,115 @@
 {% block title %}Nueva reserva{% endblock %}
 
 {% block content %}
-    <h1 class="section-title">Nueva reserva</h1>
+    <div class="booking-shell">
+        <header class="booking-header">
+            <h1 class="section-title">Nueva reserva</h1>
+            <p class="section-subtitle">Selecciona un servicio, fecha y horario para confirmar.</p>
+        </header>
 
-    <form method="get" class="form-card">
-        <div class="card">
-            <label for="{{ filter_form.service.id_for_label }}">Servicio</label><br />
-            {{ filter_form.service }}
-            {{ filter_form.service.errors }}
-        </div>
-
-        <div class="card">
-            <label for="{{ filter_form.date.id_for_label }}">Fecha</label><br />
-            <div class="calendar" id="calendar" data-selected="{{ selected_date }}">
-                <div class="calendar-header">
-                    <span class="calendar-title" id="calendar-title"></span>
-                    <div class="calendar-nav">
-                        <button type="button" id="calendar-prev">Anterior</button>
-                        <button type="button" id="calendar-next">Siguiente</button>
+        <div class="booking-layout">
+            <section class="booking-panel booking-panel--primary">
+                <form method="get" class="booking-step">
+                    <div class="booking-step-header">
+                        <span class="booking-step-number">1</span>
+                        <div>
+                            <h2>Servicio</h2>
+                            <p>Elige el tratamiento que deseas reservar.</p>
+                        </div>
                     </div>
-                </div>
-                <div class="calendar-grid" id="calendar-weekdays"></div>
-                <div class="calendar-grid" id="calendar-days"></div>
-            </div>
-            <div class="js-fallback">
-                {{ filter_form.date }}
-            </div>
-            {{ filter_form.date.errors }}
+                    <div class="booking-field">
+                        <label for="{{ filter_form.service.id_for_label }}">Servicio</label>
+                        {{ filter_form.service }}
+                        {{ filter_form.service.errors }}
+                    </div>
+
+                    <div class="booking-step-header">
+                        <span class="booking-step-number">2</span>
+                        <div>
+                            <h2>Fecha</h2>
+                            <p>Selecciona el dia que mejor te acomode.</p>
+                        </div>
+                    </div>
+                    <div class="booking-field">
+                        <label for="{{ filter_form.date.id_for_label }}">Fecha</label>
+                        <div class="calendar" id="calendar" data-selected="{{ selected_date }}">
+                            <div class="calendar-header">
+                                <span class="calendar-title" id="calendar-title"></span>
+                                <div class="calendar-nav">
+                                    <button type="button" id="calendar-prev">Anterior</button>
+                                    <button type="button" id="calendar-next">Siguiente</button>
+                                </div>
+                            </div>
+                            <div class="calendar-grid" id="calendar-weekdays"></div>
+                            <div class="calendar-grid" id="calendar-days"></div>
+                        </div>
+                        <div class="js-fallback">
+                            {{ filter_form.date }}
+                        </div>
+                        {{ filter_form.date.errors }}
+                    </div>
+
+                    <button type="submit" class="btn btn--ghost">Ver horarios</button>
+                </form>
+            </section>
+
+            <aside class="booking-panel booking-panel--secondary">
+                <form method="post" class="booking-step">
+                    {% csrf_token %}
+                    {{ booking_form.non_field_errors }}
+                    {{ booking_form.service }}
+                    <input type="hidden" name="date" value="{{ selected_date }}" />
+
+                    <div class="booking-step-header">
+                        <span class="booking-step-number">3</span>
+                        <div>
+                            <h2>Horario</h2>
+                            <p>Selecciona el bloque disponible.</p>
+                        </div>
+                    </div>
+
+                    <div class="booking-field">
+                        <label id="slot-label">Horario disponible</label>
+                        {% if slots %}
+                            <div class="slot-grid" id="slot-grid" role="radiogroup" aria-labelledby="slot-label">
+                                {% for slot in slots %}
+                                    <label class="slot-option">
+                                        <input
+                                            type="radio"
+                                            name="slot"
+                                            value="{{ slot.id }}"
+                                            {% if booking_form.data.slot == slot.id|stringformat:"s" %}checked{% endif %}
+                                        />
+                                        <span>{{ slot.start_time }} - {{ slot.end_time }}</span>
+                                    </label>
+                                {% endfor %}
+                            </div>
+                        {% elif selected_date %}
+                            <p>No hay horarios disponibles para esta fecha.</p>
+                        {% endif %}
+                        {{ booking_form.slot.errors }}
+                        {% if not selected_date %}
+                            <small>Selecciona una fecha para ver horarios.</small>
+                        {% endif %}
+                    </div>
+
+                    <div class="booking-summary">
+                        <h3>Resumen</h3>
+                        <div>
+                            <span>Servicio</span>
+                            <strong>{{ selected_service.name|default:"-" }}</strong>
+                        </div>
+                        <div>
+                            <span>Fecha</span>
+                            <strong>{{ selected_date|default:"-" }}</strong>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn--full">Reservar</button>
+                </form>
+            </aside>
         </div>
-
-        <button type="submit">Ver horarios</button>
-    </form>
-
-    <form method="post" class="form-card">
-        {% csrf_token %}
-        {{ booking_form.non_field_errors }}
-        {{ booking_form.service }}
-        <input type="hidden" name="date" value="{{ selected_date }}" />
-
-        <div class="card">
-            <label id="slot-label">Horario</label><br />
-            {% if slots %}
-                <div class="slot-grid" id="slot-grid" role="radiogroup" aria-labelledby="slot-label">
-                    {% for slot in slots %}
-                        <label class="slot-option">
-                            <input
-                                type="radio"
-                                name="slot"
-                                value="{{ slot.id }}"
-                                {% if booking_form.data.slot == slot.id|stringformat:"s" %}checked{% endif %}
-                            />
-                            <span>{{ slot.start_time }} - {{ slot.end_time }}</span>
-                        </label>
-                    {% endfor %}
-                </div>
-            {% elif selected_date %}
-                <p>No hay horarios disponibles para esta fecha.</p>
-            {% endif %}
-            {{ booking_form.slot.errors }}
-            {% if not selected_date %}
-                <small>Selecciona una fecha para ver horarios.</small>
-            {% endif %}
-        </div>
-
-        <button type="submit">Reservar</button>
-    </form>
+    </div>
 
     <script>
         (function () {

@@ -77,6 +77,15 @@ class ServiceForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         for field_name in self.fields:
             self.fields[field_name].widget.attrs.update({"class": "input"})
+            
+class LoginForm(forms.Form):
+    username = forms.CharField(
+        widget=forms.TextInput(attrs={'class': 'input'})
+    )
+    password = forms.CharField(
+        widget=forms.PasswordInput(attrs={'class': 'input'})
+    )
+
 
 
 class AvailabilitySlotForm(forms.ModelForm):

@@ -51,7 +51,7 @@
                 {% if has_photos %}
                     {% for photo in about_photos %}
                         <div class="about-photo">
-                            <img src="{{ photo.image.url }}" alt="{{ photo.caption|default:'Foto del salon' }}" />
+                            <img src="{{ photo.image.url }}" alt="{{ photo.caption|default:'Foto del salon' }}" loading="lazy" width="600" height="600" />
                         </div>
                     {% endfor %}
                 {% else %}

@@ -10,7 +10,7 @@ from django.views.decorators.http import require_POST
 
 from .forms import BookingCreateForm, BookingFilterForm
 from .models import Booking
-from services.models import AvailabilitySlot
+from services.models import AvailabilitySlot, Service
 
 
 @login_required
@@ -18,11 +18,17 @@ def booking_create(request):
 	selected_service = request.POST.get("service") or request.GET.get("service")
 	selected_date_str = request.POST.get("date") or request.GET.get("date")
 	selected_date = None
+	selected_service_obj = None
 	if selected_date_str:
 		try:
 			selected_date = date.fromisoformat(selected_date_str)
 		except ValueError:
 			selected_date = None
+	if selected_service:
+		try:
+			selected_service_obj = Service.objects.filter(is_active=True).get(pk=selected_service)
+		except Service.DoesNotExist:
+			selected_service_obj = None
 	if selected_date and selected_date < timezone.localdate():
 		messages.error(request, "No puedes reservar en una fecha pasada.")
 		selected_date = None
@@ -63,6 +69,7 @@ def booking_create(request):
 		"filter_form": filter_form,
 		"booking_form": booking_form,
 		"selected_date": selected_date_str,
+		"selected_service": selected_service_obj,
 		"slots": list(slots_queryset),
 	}
 	return render(request, "bookings/booking_form.html", context)

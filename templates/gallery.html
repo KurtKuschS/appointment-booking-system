@@ -19,13 +19,13 @@
                     <div class="gallery-pair">
                         {% if item.before_image %}
                             <div class="gallery-photo">
-                                <img src="{{ item.before_image.url }}" alt="Antes" />
+                                <img src="{{ item.before_image.url }}" alt="Antes" loading="lazy" width="600" height="400" />
                                 <span class="gallery-label">Antes</span>
                             </div>
                         {% endif %}
                         {% if item.after_image %}
                             <div class="gallery-photo">
-                                <img src="{{ item.after_image.url }}" alt="Despues" />
+                                <img src="{{ item.after_image.url }}" alt="Despues" loading="lazy" width="600" height="400" />
                                 <span class="gallery-label">Despues</span>
                             </div>
                         {% endif %}

@@ -70,6 +70,20 @@ button,
     transition: transform 0.15s ease, background 0.15s ease;
 }
 
+.btn--full {
+    width: 100%;
+    justify-content: center;
+    margin-top: 4px;
+}
+
+.errorlist {
+    margin: 8px 0 0 0;
+    padding: 0;
+    list-style: none;
+    color: var(--danger);
+    font-size: 13px;
+}
+
 button:hover,
 .btn:hover {
     background: var(--accent-dark);

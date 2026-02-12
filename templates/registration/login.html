@@ -3,22 +3,47 @@
 {% block title %}Ingresar{% endblock %}
 
 {% block content %}
-    <h1 class="section-title">Ingresar</h1>
+<section class="auth-shell">
+    <div class="auth-card">
+        <header class="auth-header">
+            <h1 class="section-title">Ingresar</h1>
+            <p class="auth-subtitle">Accede para ver tus reservas y perfil.</p>
+        </header>
 
-    <form method="post">
-        {% csrf_token %}
-        {{ form.non_field_errors }}
+        <form method="post" class="auth-form">
+            {% csrf_token %}
+            {{ form.non_field_errors }}
 
-        <div class="card">
-            <label for="{{ form.username.id_for_label }}">Usuario</label><br />
-            {{ form.username }}
-        </div>
+            <div class="form-row">
+                <label for="{{ form.username.id_for_label }}">Usuario</label>
+                {{ form.username }}
+                {{ form.username.errors }}
+            </div>
 
-        <div class="card">
-            <label for="{{ form.password.id_for_label }}">Contrasena</label><br />
-            {{ form.password }}
-        </div>
+            <div class="form-row">
+                <label for="{{ form.password.id_for_label }}">Contraseña</label>
+                {{ form.password }}
+                {{ form.password.errors }}
+            </div>
 
-        <button type="submit">Entrar</button>
-    </form>
+            <button type="submit" class="btn btn--full">Entrar</button>
+        </form>
+
+        <p class="auth-footer">Olvidaste tu contraseña? <a href="{% url 'password_reset' %}">Recuperar</a></p>
+        <p class="auth-footer">No tienes cuenta? <a href="{% url 'signup' %}">Crear cuenta</a></p>
+    </div>
+</section>
+
+<script>
+    (function () {
+        const username = document.getElementById("id_username");
+        const password = document.getElementById("id_password");
+        if (username) {
+            username.setAttribute("autocomplete", "username");
+        }
+        if (password) {
+            password.setAttribute("autocomplete", "current-password");
+        }
+    })();
+</script>
 {% endblock %}
