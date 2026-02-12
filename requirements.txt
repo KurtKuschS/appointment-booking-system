@@ -5,3 +5,4 @@ sqlparse==0.5.5
 typing_extensions==4.15.0
 gunicorn
 Pillow==10.4.0
+whitenoise==6.7.0
