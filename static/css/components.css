@@ -34,6 +34,7 @@
     font-size: 30px;
     margin-bottom: 12px;
     letter-spacing: 0.2px;
+    font-family: "Fraunces", serif;
 }
 
 .badge {
@@ -269,6 +270,26 @@ button:hover,
     color: var(--muted);
 }
 
+.section-lead {
+    background: #fff6f2;
+    border: 1px solid #eadfd9;
+    border-radius: 12px;
+    padding: 10px 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 10px 24px rgba(40, 24, 22, 0.08);
+}
+
+.section-lead::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 4px rgba(184, 124, 124, 0.15);
+}
+
 .trust-strip {
     display: grid;
     gap: 12px;
@@ -288,6 +309,7 @@ button:hover,
     font-size: 20px;
     font-weight: 700;
     margin-bottom: 4px;
+    font-family: "Fraunces", serif;
 }
 
 .stat-label {

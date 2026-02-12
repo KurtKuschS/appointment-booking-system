@@ -10,6 +10,9 @@
     <meta property="og:type" content="website" />
     <meta property="og:title" content="{% block og_title %}Salon Lash{% endblock %}" />
     <meta property="og:description" content="{% block og_description %}Reserva tu hora de manera simple y rapida.{% endblock %}" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Sora:wght@400;600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="{% static 'css/base.css' %}" />
     <link rel="stylesheet" href="{% static 'css/layout.css' %}" />
     <link rel="stylesheet" href="{% static 'css/components.css' %}" />
@@ -22,7 +25,10 @@
             <span class="brand-title">Salon Lash</span>
             <span class="brand-sub">Reservas</span>
         </a>
-        <nav class="nav">
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+            Menu
+        </button>
+        <nav class="nav" id="site-nav">
             <div class="nav-group">
                 <a class="nav-link" href="{% url 'home' %}">Inicio</a>
                 <a class="nav-link" href="{% url 'service_list' %}">Servicios</a>
@@ -62,5 +68,18 @@
     {% endif %}
     {% block content %}{% endblock %}
 </main>
+<script>
+    (function () {
+        const toggle = document.querySelector(".nav-toggle");
+        const nav = document.getElementById("site-nav");
+        if (!toggle || !nav) {
+            return;
+        }
+        toggle.addEventListener("click", function () {
+            const isOpen = nav.classList.toggle("is-open");
+            toggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+        });
+    })();
+</script>
 </body>
 </html>
