@@ -25,6 +25,12 @@ class Booking(models.Model):
 
 	class Meta:
 		ordering = ["-created_at"]
+		constraints = [
+			models.UniqueConstraint(
+				fields=["slot"],
+				name="unique_booking_per_slot",
+			),
+		]
 
 	def __str__(self) -> str:
 		return f"{self.client} - {self.service} - {self.slot}"
