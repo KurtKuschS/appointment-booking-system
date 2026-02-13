@@ -1,4 +1,4 @@
-# Appointment Booking System
+# Beauty Service Appointment Booking Platform
 
 Plataforma de reservas para un salon de extensiones de pestañas. Centraliza disponibilidad, servicios y gestion administrativa en un flujo claro para clientas y staff, con foco en evitar dobles reservas.
 
@@ -9,6 +9,22 @@ Los salones pequeños suelen gestionar agenda por whatsapp, lo que genera perdid
 - Clientas que necesitan reservar y reprogramar sin llamadas.
 - Administracion del salon que gestiona servicios, horarios y estados de reservas.
 - Negocios de belleza con operacion de uno o pocos profesionales.
+
+## Features
+
+### Clienta
+- Registro e inicio de sesion
+- Visualizacion de servicios disponibles
+- Consulta de disponibilidad por fecha
+- Reserva de hora
+- Cancelacion de reservas
+
+### Administradora
+- CRUD de servicios (nombre, duracion, precio)
+- Gestion de horarios disponibles (availability slots)
+- Visualizacion de reservas
+- Cambio de estado de reservas
+- Dashboard con metricas basicas (ingresos mensuales, reservas activas)
 
 ## Arquitectura explicada
 Arquitectura monolitica con Django y apps separadas por dominio. El flujo principal va desde la interfaz web a vistas Django, pasa por formularios de validacion y persiste en PostgreSQL.
@@ -48,6 +64,11 @@ flowchart TD
 - Separacion por apps: reduce acoplamiento y facilita mantenimiento.
 - Slots como entidad propia: permite controlar disponibilidad y evitar dobles reservas.
 - Whitenoise y configuracion por variables de entorno: despliegue simple en entornos cloud.
+
+## Control de integridad
+- Validacion backend para evitar doble reserva.
+- Separacion de AvailabilitySlot como entidad independiente.
+- Restriccion unica a nivel base de datos para garantizar que un slot solo pueda tener una reserva.
 
 ## Futuras mejoras
 - Multi-profesional: asignar servicios y slots por especialista.
